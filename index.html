@@ -145,39 +145,84 @@
     <section id="constructor" class="cake-constructor">
         <div class="container">
             <h2 class="section-title">Конструктор тортов</h2>
-            <div class="constructor-content">
-                <div class="constructor-controls">
-                    <div class="control-group">
-                        <label>Количество коржей:</label>
-                        <div class="number-input">
-                            <button class="number-btn" onclick="changeLayers(-1)">-</button>
-                            <span id="layerCount">3</span>
-                            <button class="number-btn" onclick="changeLayers(1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label>Выберите коржи:</label>
-                        <div class="layer-options" id="layerOptions">
-                            <!-- Опции коржей будут добавлены динамически -->
-                        </div>
-                        <button class="btn btn-small clear-btn" onclick="clearAllLayers()">Очистить все коржи</button>
-                    </div>
-                    <div class="control-group">
-                        <label>Выберите кремы:</label>
-                        <div class="cream-options" id="creamOptions">
-                            <!-- Опции кремов будут добавлены динамически -->
-                        </div>
-                        <button class="btn btn-small clear-btn" onclick="clearAllCreams()">Очистить все кремы</button>
+            
+            <!-- Настройки торта -->
+            <div class="cake-settings" id="cakeSettings">
+                <div class="setting-group">
+                    <label>Количество коржей:</label>
+                    <div class="number-input">
+                        <button class="number-btn" onclick="changeLayers(-1)">-</button>
+                        <span id="layerCount">3</span>
+                        <button class="number-btn" onclick="changeLayers(1)">+</button>
                     </div>
                 </div>
-                <div class="constructor-preview">
-                    <div class="cake-preview" id="cakePreview">
-                        <!-- Визуальный предварительный просмотр торта -->
+                <div class="setting-group">
+                    <label>Диаметр торта (см):</label>
+                    <div class="diameter-input">
+                        <select id="diameterSelect">
+                            <option value="16">16 см</option>
+                            <option value="18" selected>18 см</option>
+                            <option value="20">20 см</option>
+                            <option value="22">22 см</option>
+                            <option value="24">24 см</option>
+                            <option value="26">26 см</option>
+                        </select>
                     </div>
                 </div>
+                <button class="btn btn-primary" onclick="startConstructor()">Начать создание</button>
             </div>
-            <div class="recipe-output" id="recipeOutput">
-                <!-- Рецепт и список продуктов будут отображаться здесь -->
+
+                         <!-- Основной конструктор -->
+             <div class="constructor-main" id="constructorMain" style="display: none;">
+                 <div class="constructor-layout">
+                     <!-- Центральная область с тортом -->
+                     <div class="cake-preview-area">
+                         <h3>Макет торта</h3>
+                         <div class="cake-sketch" id="cakeSketch">
+                             <!-- Реалистичный набросок торта -->
+                         </div>
+                     </div>
+ 
+                     <!-- Правая панель с составом торта -->
+                     <div class="cake-composition-panel">
+                         <h3>Состав торта</h3>
+                         <div class="composition-list" id="compositionList">
+                             <!-- Список коржей и кремов будет добавлен динамически -->
+                         </div>
+                     </div>
+                 </div>
+                 
+                 <!-- Нижняя секция с ингредиентами и рецептом -->
+                 <div class="bottom-section" id="bottomSection" style="display: none;">
+                     <div class="bottom-layout">
+                         <!-- Левая панель с точными количествами ингредиентов -->
+                         <div class="ingredients-panel">
+                             <h3>Точные количества ингредиентов</h3>
+                             <div class="ingredients-list" id="ingredientsList">
+                                 <!-- Список ингредиентов будет добавлен динамически -->
+                             </div>
+                         </div>
+ 
+                         <!-- Правая панель с рецептом -->
+                         <div class="recipe-panel">
+                             <h3>Рецепт приготовления</h3>
+                             <div class="recipe-content" id="recipeContent">
+                                 <!-- Рецепт будет добавлен динамически -->
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+
+            <!-- Модальное окно выбора ингредиентов -->
+            <div class="ingredient-modal" id="ingredientModal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeIngredientModal()">&times;</span>
+                    <h3 id="modalTitle">Выберите ингредиент</h3>
+                    <div class="ingredient-grid" id="ingredientGrid">
+                        <!-- Сетка ингредиентов будет добавлена динамически -->
+                    </div>
+                </div>
             </div>
         </div>
     </section>
