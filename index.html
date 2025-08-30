@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NunaCake - Конструктор тортиков</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-birthday-cake"></i>
+                <span>NunaCake</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#popular" class="nav-link active">Популярные торты</a>
+                <a href="#constructor" class="nav-link">Конструктор</a>
+            </div>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Главный экран -->
+    <header class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="title-line">Создай свой</span>
+                    <span class="title-line highlight">идеальный торт</span>
+                </h1>
+                <p class="hero-subtitle">От классических рецептов до уникальных комбинаций</p>
+                <div class="hero-buttons">
+                    <a href="#popular" class="btn btn-primary">Популярные рецепты</a>
+                    <a href="#constructor" class="btn btn-secondary">Создать торт</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="floating-cake">
+                    <div class="cake-layer"></div>
+                    <div class="cake-layer"></div>
+                    <div class="cake-layer"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Популярные торты -->
+    <section id="popular" class="popular-cakes">
+        <div class="container">
+            <h2 class="section-title">Популярные торты</h2>
+            <div class="cakes-grid">
+                <div class="cake-card" data-cake="chocolate">
+                    <div class="cake-image">
+                        <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&h=300&fit=crop" alt="Шоколадный торт">
+                    </div>
+                    <div class="cake-info">
+                        <h3>Шоколадный торт</h3>
+                        <p>Классический шоколадный торт с нежным кремом</p>
+                        <button class="btn btn-small">Рецепт</button>
+                    </div>
+                </div>
+                <div class="cake-card" data-cake="vanilla">
+                    <div class="cake-image">
+                        <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=400&h=300&fit=crop" alt="Ванильный торт">
+                    </div>
+                    <div class="cake-info">
+                        <h3>Ванильный торт</h3>
+                        <p>Нежный ванильный торт с клубничным кремом</p>
+                        <button class="btn btn-small">Рецепт</button>
+                    </div>
+                </div>
+                <div class="cake-card" data-cake="red-velvet">
+                    <div class="cake-image">
+                        <img src="https://images.unsplash.com/photo-1571115764595-644a1f56a55c?w=400&h=300&fit=crop" alt="Красный бархат">
+                    </div>
+                    <div class="cake-info">
+                        <h3>Красный бархат</h3>
+                        <p>Элегантный торт с крем-чизом</p>
+                        <button class="btn btn-small">Рецепт</button>
+                    </div>
+                </div>
+                <div class="cake-card" data-cake="carrot">
+                    <div class="cake-image">
+                        <img src="https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=400&h=300&fit=crop" alt="Морковный торт">
+                    </div>
+                    <div class="cake-info">
+                        <h3>Морковный торт</h3>
+                        <p>Полезный торт с морковью и орехами</p>
+                        <button class="btn btn-small">Рецепт</button>
+                    </div>
+                </div>
+                <div class="cake-card" data-cake="tiramisu">
+                    <div class="cake-image">
+                        <img src="https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=400&h=300&fit=crop" alt="Тирамису">
+                    </div>
+                    <div class="cake-info">
+                        <h3>Тирамису</h3>
+                        <p>Итальянский десерт с кофе и маскарпоне</p>
+                        <button class="btn btn-small">Рецепт</button>
+                    </div>
+                </div>
+                <div class="cake-card" data-cake="cheesecake">
+                    <div class="cake-image">
+                        <img src="https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=400&h=300&fit=crop" alt="Чизкейк">
+                    </div>
+                    <div class="cake-info">
+                        <h3>Чизкейк</h3>
+                        <p>Нежный чизкейк с ягодным соусом</p>
+                        <button class="btn btn-small">Рецепт</button>
+                    </div>
+                </div>
+                <div class="cake-card" data-cake="black-forest">
+                    <div class="cake-image">
+                        <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=400&h=300&fit=crop" alt="Черный лес">
+                    </div>
+                    <div class="cake-info">
+                        <h3>Черный лес</h3>
+                        <p>Немецкий торт с вишней и шоколадом</p>
+                        <button class="btn btn-small">Рецепт</button>
+                    </div>
+                </div>
+                <div class="cake-card" data-cake="opera">
+                    <div class="cake-image">
+                        <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&h=300&fit=crop" alt="Опера">
+                    </div>
+                    <div class="cake-info">
+                        <h3>Опера</h3>
+                        <p>Французский торт с кофе и шоколадом</p>
+                        <button class="btn btn-small">Рецепт</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Конструктор тортов -->
+    <section id="constructor" class="cake-constructor">
+        <div class="container">
+            <h2 class="section-title">Конструктор тортов</h2>
+            <div class="constructor-content">
+                <div class="constructor-controls">
+                    <div class="control-group">
+                        <label>Количество коржей:</label>
+                        <div class="number-input">
+                            <button class="number-btn" onclick="changeLayers(-1)">-</button>
+                            <span id="layerCount">3</span>
+                            <button class="number-btn" onclick="changeLayers(1)">+</button>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label>Выберите коржи:</label>
+                        <div class="layer-options" id="layerOptions">
+                            <!-- Опции коржей будут добавлены динамически -->
+                        </div>
+                        <button class="btn btn-small clear-btn" onclick="clearAllLayers()">Очистить все коржи</button>
+                    </div>
+                    <div class="control-group">
+                        <label>Выберите кремы:</label>
+                        <div class="cream-options" id="creamOptions">
+                            <!-- Опции кремов будут добавлены динамически -->
+                        </div>
+                        <button class="btn btn-small clear-btn" onclick="clearAllCreams()">Очистить все кремы</button>
+                    </div>
+                </div>
+                <div class="constructor-preview">
+                    <div class="cake-preview" id="cakePreview">
+                        <!-- Визуальный предварительный просмотр торта -->
+                    </div>
+                </div>
+            </div>
+            <div class="recipe-output" id="recipeOutput">
+                <!-- Рецепт и список продуктов будут отображаться здесь -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Модальное окно с рецептом -->
+    <div class="modal" id="recipeModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-body">
+                <h3 id="modalTitle">Рецепт торта</h3>
+                <div class="recipe-content">
+                    <div class="ingredients">
+                        <h4>Ингредиенты:</h4>
+                        <ul id="ingredientsList"></ul>
+                    </div>
+                    <div class="instructions">
+                        <h4>Приготовление:</h4>
+                        <ol id="instructionsList"></ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
