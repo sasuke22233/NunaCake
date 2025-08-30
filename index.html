@@ -44,9 +44,28 @@
             </div>
             <div class="hero-visual">
                 <div class="floating-cake">
-                    <div class="cake-layer"></div>
-                    <div class="cake-layer"></div>
-                    <div class="cake-layer"></div>
+                    <div class="cake-flame"></div>
+                    <div class="cake-candle"></div>
+                    <div class="cake-layer">
+                        <div class="side-pattern"></div>
+                    </div>
+                    <div class="cake-layer">
+                        <div class="side-pattern"></div>
+                    </div>
+                    <div class="cake-layer">
+                        <div class="cream-pattern"></div>
+                        <div class="side-pattern"></div>
+                        <div class="cake-sprinkles">
+                            <div class="cake-sprinkle"></div>
+                            <div class="cake-sprinkle"></div>
+                            <div class="cake-sprinkle"></div>
+                            <div class="cake-sprinkle"></div>
+                            <div class="cake-sprinkle"></div>
+                            <div class="cake-sprinkle"></div>
+                            <div class="cake-sprinkle"></div>
+                            <div class="cake-sprinkle"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -137,6 +156,66 @@
                         <button class="btn btn-small">Рецепт</button>
                     </div>
                 </div>
+                <div class="cake-card" data-cake="chocolate-mousse">
+                    <div class="cake-image">
+                        <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&h=300&fit=crop" alt="Шоколадный мусс">
+                    </div>
+                    <div class="cake-info">
+                        <h3>Шоколадный мусс</h3>
+                        <p>Воздушный шоколадный мусс с нежной текстурой</p>
+                        <button class="btn btn-small">Рецепт</button>
+                    </div>
+                </div>
+                <div class="cake-card" data-cake="fruit-pavlova">
+                    <div class="cake-image">
+                        <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=400&h=300&fit=crop" alt="Павлова с фруктами">
+                    </div>
+                    <div class="cake-info">
+                        <h3>Павлова с фруктами</h3>
+                        <p>Легкий торт-меренга с свежими фруктами</p>
+                        <button class="btn btn-small">Рецепт</button>
+                    </div>
+                </div>
+                <div class="cake-card" data-cake="lemon-drizzle">
+                    <div class="cake-image">
+                        <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=400&h=300&fit=crop" alt="Лимонный торт">
+                    </div>
+                    <div class="cake-info">
+                        <h3>Лимонный торт</h3>
+                        <p>Освежающий лимонный торт с глазурью</p>
+                        <button class="btn btn-small">Рецепт</button>
+                    </div>
+                </div>
+                <div class="cake-card" data-cake="coffee-walnut">
+                    <div class="cake-image">
+                        <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&h=300&fit=crop" alt="Кофейно-ореховый торт">
+                    </div>
+                    <div class="cake-info">
+                        <h3>Кофейно-ореховый</h3>
+                        <p>Ароматный торт с кофе и грецкими орехами</p>
+                        <button class="btn btn-small">Рецепт</button>
+                    </div>
+                </div>
+                <div class="cake-card" data-cake="banana-bread">
+                    <div class="cake-image">
+                        <img src="https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=400&h=300&fit=crop" alt="Банановый хлеб">
+                    </div>
+                    <div class="cake-info">
+                        <h3>Банановый хлеб</h3>
+                        <p>Влажный банановый хлеб с корицей</p>
+                        <button class="btn btn-small">Рецепт</button>
+                    </div>
+                </div>
+                <div class="cake-card" data-cake="apple-cinnamon">
+                    <div class="cake-image">
+                        <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=400&h=300&fit=crop" alt="Яблочно-коричный торт">
+                    </div>
+                    <div class="cake-info">
+                        <h3>Яблочно-коричный</h3>
+                        <p>Домашний торт с яблоками и корицей</p>
+                        <button class="btn btn-small">Рецепт</button>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -192,6 +271,14 @@
                      </div>
                  </div>
                  
+                 <!-- Кнопка рецепта -->
+                 <div class="recipe-button-container" id="recipeButtonContainer" style="display: none;">
+                     <button class="btn btn-primary recipe-btn" id="recipeBtn" onclick="showRecipe()">
+                         <i class="fas fa-book-open"></i>
+                         Показать рецепт
+                     </button>
+                 </div>
+                 
                  <!-- Нижняя секция с ингредиентами и рецептом -->
                  <div class="bottom-section" id="bottomSection" style="display: none;">
                      <div class="bottom-layout">
@@ -207,7 +294,7 @@
                          <div class="recipe-panel">
                              <h3>Рецепт приготовления</h3>
                              <div class="recipe-content" id="recipeContent">
-                                 <!-- Рецепт будет добавлен динамически -->
+                                 <p>Нажмите кнопку "Показать рецепт" для получения подробных инструкций</p>
                              </div>
                          </div>
                      </div>
@@ -267,6 +354,7 @@
         </div>
     </div>
 
+    <script src="data.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

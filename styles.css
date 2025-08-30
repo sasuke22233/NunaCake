@@ -102,14 +102,64 @@ body {
     display: none;
     flex-direction: column;
     cursor: pointer;
+    gap: 4px;
 }
 
 .nav-toggle span {
     width: 25px;
     height: 3px;
     background: var(--text-dark);
-    margin: 3px 0;
     transition: var(--transition);
+    border-radius: 2px;
+}
+
+.nav-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.nav-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.nav-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* Мобильная навигация */
+@media (max-width: 768px) {
+    .nav-toggle {
+        display: flex;
+    }
+    
+    .nav-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.98);
+        flex-direction: column;
+        gap: 0;
+        padding: 1rem 0;
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--transition);
+    }
+    
+    .nav-menu.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .nav-link {
+        padding: 1rem 2rem;
+        border-bottom: 1px solid var(--light-gray);
+    }
+    
+    .nav-link:last-child {
+        border-bottom: none;
+    }
 }
 
 /* Главный экран */
@@ -131,65 +181,60 @@ body {
     align-items: center;
 }
 
+.hero-text {
+    z-index: 2;
+}
+
 .hero-title {
     font-size: 3.5rem;
     font-weight: 700;
-    line-height: 1.2;
+    line-height: 1.1;
     margin-bottom: 1.5rem;
 }
 
 .title-line {
     display: block;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 0.8s ease forwards;
 }
 
-.title-line:nth-child(2) {
-    animation-delay: 0.2s;
-}
-
-.highlight {
-    background: linear-gradient(135deg, var(--accent-pink), var(--secondary-pink));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+.title-line.highlight {
+    color: var(--accent-pink);
 }
 
 .hero-subtitle {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     color: var(--text-light);
     margin-bottom: 2rem;
-    opacity: 0;
-    animation: fadeInUp 0.8s ease 0.4s forwards;
 }
 
 .hero-buttons {
     display: flex;
     gap: 1rem;
-    opacity: 0;
-    animation: fadeInUp 0.8s ease 0.6s forwards;
+    flex-wrap: wrap;
 }
 
 .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
     padding: 1rem 2rem;
     border: none;
     border-radius: var(--border-radius);
+    font-size: 1rem;
     font-weight: 600;
     text-decoration: none;
     cursor: pointer;
     transition: var(--transition);
-    display: inline-block;
     text-align: center;
+    justify-content: center;
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, var(--accent-pink), var(--secondary-pink));
+    background: var(--accent-pink);
     color: white;
-    box-shadow: var(--shadow);
 }
 
 .btn-primary:hover {
+    background: #e55aa0;
     transform: translateY(-2px);
     box-shadow: var(--shadow-hover);
 }
@@ -207,86 +252,354 @@ body {
 }
 
 .btn-small {
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1.5rem;
     font-size: 0.9rem;
-}
-
-.clear-btn {
-    margin-top: 1rem;
-    background: var(--light-gray);
-    color: var(--text-light);
-    border: 1px solid var(--text-light);
-}
-
-.clear-btn:hover {
-    background: #e9ecef;
-    color: var(--text-dark);
 }
 
 .hero-visual {
     display: flex;
     justify-content: center;
     align-items: center;
-    opacity: 0;
-    animation: fadeInUp 0.8s ease 0.8s forwards;
+    position: relative;
 }
 
 .floating-cake {
     position: relative;
-    animation: float 6s ease-in-out infinite;
+    animation: bounce 2s ease-in-out infinite;
+    transform-origin: center bottom;
+    filter: drop-shadow(0 10px 20px rgba(255, 105, 180, 0.3));
+    transition: all 0.3s ease;
+}
+
+/* Добавляем свечи на торт */
+.cake-candle {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 20px;
+    background: linear-gradient(to bottom, #FFD700, #FFA500);
+    border-radius: 2px;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    animation: candleFlicker 1.5s ease-in-out infinite;
+    z-index: 10;
+}
+
+/* Добавляем пламя свечи */
+.cake-flame {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 12px;
+    background: radial-gradient(ellipse, #FFD700, #FF6B35, #FF4500);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    animation: flameFlicker 0.8s ease-in-out infinite;
+    z-index: 11;
+}
+
+.floating-cake:hover {
+    animation-play-state: paused;
+    transform: scale(1.1);
+}
+
+.floating-cake::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 10px;
+    background: radial-gradient(ellipse, rgba(0,0,0,0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: shadow 2s ease-in-out infinite;
 }
 
 .cake-layer {
-    width: 200px;
-    height: 40px;
-    background: linear-gradient(135deg, var(--secondary-pink), var(--accent-pink));
-    border-radius: 20px;
-    margin: 5px 0;
-    box-shadow: var(--shadow);
+    position: relative;
+    width: 160px;
+    height: 50px;
+    background: linear-gradient(45deg, #FF69B4, #E91E63);
+    border-radius: 80px 80px 30px 30px;
+    margin-bottom: -20px;
+    box-shadow: 
+        0 8px 32px rgba(255, 105, 180, 0.3),
+        inset 0 2px 4px rgba(255, 255, 255, 0.3),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+    animation: layerBounce 2s ease-in-out infinite;
+    animation-delay: 0.1s;
+    overflow: hidden;
+}
+
+.cake-layer::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    right: 15px;
+    height: 12px;
+    background: linear-gradient(90deg, #E91E63, #FF69B4, #E91E63);
+    border-radius: 6px;
+    opacity: 0.8;
+}
+
+.cake-layer::after {
+    content: '';
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+    right: 20px;
+    height: 10px;
+    background: linear-gradient(90deg, #C2185B, #E91E63, #C2185B);
+    border-radius: 5px;
+    opacity: 0.6;
+}
+
+/* Добавляем боковые узоры на коржи */
+.cake-layer .side-pattern {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    height: 20px;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent 0px,
+        transparent 15px,
+        rgba(255, 105, 180, 0.3) 15px,
+        rgba(255, 105, 180, 0.3) 18px
+    );
+    border-radius: 10px;
+    opacity: 0.4;
 }
 
 .cake-layer:nth-child(2) {
-    width: 180px;
-    margin-left: 10px;
+    background: linear-gradient(45deg, #FFE5F1, #FFB6D9);
+    width: 140px;
+    height: 45px;
+    border-radius: 70px 70px 25px 25px;
+    box-shadow: 
+        0 8px 32px rgba(255, 105, 180, 0.3),
+        inset 0 2px 4px rgba(255, 255, 255, 0.3),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+    animation: layerBounce 2s ease-in-out infinite;
+    animation-delay: 0.2s;
+}
+
+.cake-layer:nth-child(2)::before {
+    top: 8px;
+    left: 12px;
+    right: 12px;
+    height: 10px;
+    background: linear-gradient(90deg, #FFB6D9, #FFE5F1, #FFB6D9);
+}
+
+.cake-layer:nth-child(2)::after {
+    bottom: 8px;
+    left: 18px;
+    right: 18px;
+    height: 8px;
+    background: linear-gradient(90deg, #FF69B4, #FFB6D9, #FF69B4);
 }
 
 .cake-layer:nth-child(3) {
-    width: 160px;
-    margin-left: 20px;
+    background: linear-gradient(45deg, #FFB6D9, #FF69B4);
+    width: 120px;
+    height: 40px;
+    border-radius: 60px 60px 20px 20px;
+    box-shadow: 
+        0 8px 32px rgba(255, 105, 180, 0.3),
+        inset 0 2px 4px rgba(255, 255, 255, 0.3),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+    animation: layerBounce 2s ease-in-out infinite;
+    animation-delay: 0.3s;
 }
 
-/* Секции */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem;
+.cake-layer:nth-child(3)::before {
+    top: 5px;
+    left: 10px;
+    right: 10px;
+    height: 8px;
+    background: linear-gradient(90deg, #FF69B4, #FFB6D9, #FF69B4);
 }
 
-.section-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 3rem;
-    background: linear-gradient(135deg, var(--accent-pink), var(--secondary-pink));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+.cake-layer:nth-child(3)::after {
+    bottom: 5px;
+    left: 15px;
+    right: 15px;
+    height: 6px;
+    background: linear-gradient(90deg, #E91E63, #FF69B4, #E91E63);
+}
+
+/* Добавляем кремовые узоры на торт */
+.cake-layer:nth-child(3) {
+    position: relative;
+}
+
+.cake-layer:nth-child(3) .cream-pattern {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 15px;
+    background: radial-gradient(circle at 15px center, #FFE5F1 0%, transparent 50%),
+                radial-gradient(circle at 30px center, #FFB6D9 0%, transparent 50%),
+                radial-gradient(circle at 45px center, #FFE5F1 0%, transparent 50%);
+    border-radius: 8px;
+    opacity: 0.7;
+}
+
+/* Добавляем посыпку на торт */
+.cake-sprinkles {
+    position: absolute;
+    top: 5px;
+    left: 0;
+    right: 0;
+    height: 100%;
+    pointer-events: none;
+}
+
+.cake-sprinkle {
+    position: absolute;
+    width: 2px;
+    height: 6px;
+    background: linear-gradient(to bottom, #FF69B4, #FFB6D9);
+    border-radius: 1px;
+    animation: sprinkleTwinkle 2s ease-in-out infinite;
+}
+
+.cake-sprinkle:nth-child(1) { top: 15%; left: 20%; animation-delay: 0s; }
+.cake-sprinkle:nth-child(2) { top: 25%; left: 30%; animation-delay: 0.3s; }
+.cake-sprinkle:nth-child(3) { top: 20%; left: 40%; animation-delay: 0.6s; }
+.cake-sprinkle:nth-child(4) { top: 30%; left: 50%; animation-delay: 0.9s; }
+.cake-sprinkle:nth-child(5) { top: 15%; left: 60%; animation-delay: 1.2s; }
+.cake-sprinkle:nth-child(6) { top: 25%; left: 70%; animation-delay: 1.5s; }
+.cake-sprinkle:nth-child(7) { top: 20%; left: 80%; animation-delay: 1.8s; }
+.cake-sprinkle:nth-child(8) { top: 30%; left: 90%; animation-delay: 2.1s; }
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { 
+        transform: translateY(0px) rotate(0deg) scale(1, 1); 
+    }
+    40% { 
+        transform: translateY(-30px) rotate(2deg) scale(1.1, 0.9); 
+    }
+    60% { 
+        transform: translateY(-15px) rotate(-1deg) scale(1.05, 0.95); 
+    }
+    10% {
+        transform: translateY(-5px) rotate(1deg) scale(1.02, 0.98);
+    }
+    30% {
+        transform: translateY(-20px) rotate(1.5deg) scale(1.08, 0.92);
+    }
+    70% {
+        transform: translateY(-8px) rotate(-0.5deg) scale(1.03, 0.97);
+    }
+    90% {
+        transform: translateY(-2px) rotate(0.5deg) scale(1.01, 0.99);
+    }
+}
+
+@keyframes shadow {
+    0%, 20%, 50%, 80%, 100% { 
+        opacity: 0.3;
+        transform: translateX(-50%) scale(1);
+    }
+    40% { 
+        opacity: 0.1;
+        transform: translateX(-50%) scale(0.8);
+    }
+    60% { 
+        opacity: 0.2;
+        transform: translateX(-50%) scale(0.9);
+    }
+}
+
+@keyframes layerBounce {
+    0%, 20%, 50%, 80%, 100% { 
+        transform: translateY(0px) scale(1, 1); 
+    }
+    40% { 
+        transform: translateY(-25px) scale(1.05, 0.95); 
+    }
+    60% { 
+        transform: translateY(-12px) scale(1.02, 0.98); 
+    }
+}
+
+@keyframes candleFlicker {
+    0%, 100% { 
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+    }
+    50% { 
+        opacity: 0.8;
+        transform: translateX(-50%) scale(1.05);
+    }
+}
+
+@keyframes flameFlicker {
+    0%, 100% { 
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+    }
+    25% { 
+        opacity: 0.9;
+        transform: translateX(-50%) scale(1.1, 0.9);
+    }
+    50% { 
+        opacity: 0.8;
+        transform: translateX(-50%) scale(0.9, 1.2);
+    }
+    75% { 
+        opacity: 0.95;
+        transform: translateX(-50%) scale(1.05, 0.95);
+    }
+}
+
+@keyframes sprinkleTwinkle {
+    0%, 100% { 
+        opacity: 0.6;
+        transform: scale(1);
+    }
+    50% { 
+        opacity: 1;
+        transform: scale(1.2);
+    }
 }
 
 /* Популярные торты */
 .popular-cakes {
-    padding: 5rem 0;
-    background: var(--light-mint);
+    padding: 5rem 2rem;
+    background: var(--white);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    color: var(--text-dark);
 }
 
 .cakes-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
 }
 
 .cake-card {
-    background: white;
+    background: var(--white);
     border-radius: var(--border-radius);
     overflow: hidden;
     box-shadow: var(--shadow);
@@ -295,11 +608,12 @@ body {
 }
 
 .cake-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-8px);
     box-shadow: var(--shadow-hover);
 }
 
 .cake-image {
+    width: 100%;
     height: 200px;
     overflow: hidden;
 }
@@ -320,7 +634,7 @@ body {
 }
 
 .cake-info h3 {
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
     color: var(--text-dark);
@@ -329,38 +643,36 @@ body {
 .cake-info p {
     color: var(--text-light);
     margin-bottom: 1rem;
+    line-height: 1.5;
 }
 
-/* Конструктор */
+/* Конструктор тортов */
 .cake-constructor {
-    padding: 5rem 0;
-    background: var(--primary-pink);
+    padding: 5rem 2rem;
+    background: var(--light-mint);
 }
 
-.constructor-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    margin-bottom: 3rem;
-}
-
-.constructor-controls {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.control-group {
-    background: white;
-    padding: 1.5rem;
+.cake-settings {
+    max-width: 600px;
+    margin: 0 auto 3rem;
+    background: var(--white);
+    padding: 2rem;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
 }
 
-.control-group label {
-    display: block;
+.setting-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: var(--light-gray);
+    border-radius: 12px;
+}
+
+.setting-group label {
     font-weight: 600;
-    margin-bottom: 1rem;
     color: var(--text-dark);
 }
 
@@ -368,113 +680,366 @@ body {
     display: flex;
     align-items: center;
     gap: 1rem;
+    background: var(--white);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 2px solid var(--light-gray);
 }
 
 .number-btn {
-    width: 40px;
-    height: 40px;
-    border: 2px solid var(--accent-pink);
-    background: white;
-    color: var(--accent-pink);
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: var(--accent-pink);
+    color: white;
     border-radius: 50%;
     cursor: pointer;
-    transition: var(--transition);
+    font-size: 1.2rem;
     font-weight: 600;
+    transition: var(--transition);
 }
 
 .number-btn:hover {
-    background: var(--accent-pink);
-    color: white;
+    background: #e55aa0;
+    transform: scale(1.1);
 }
 
 #layerCount {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 600;
     color: var(--text-dark);
     min-width: 30px;
     text-align: center;
 }
 
-.layer-options,
-.cream-options {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 0.5rem;
-}
-
-.option-btn {
-    padding: 0.5rem;
-    border: 2px solid var(--light-mint);
-    background: white;
+.diameter-input select {
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--light-gray);
     border-radius: 8px;
+    font-size: 1rem;
+    background: var(--white);
+    color: var(--text-dark);
     cursor: pointer;
-    transition: var(--transition);
-    font-size: 0.9rem;
 }
 
-.option-btn:hover,
-.option-btn.selected {
-    border-color: var(--accent-pink);
-    background: var(--primary-pink);
-    color: var(--accent-pink);
-}
-
-.constructor-preview {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 400px;
-}
-
-.cake-preview {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-}
-
-.preview-layer {
-    width: 200px;
-    height: 40px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: var(--transition);
-    position: relative;
-}
-
-.preview-layer:hover {
-    transform: scale(1.05);
-}
-
-.preview-cream {
-    width: 180px;
-    height: 20px;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: var(--transition);
-    position: relative;
-}
-
-.preview-cream:hover {
-    transform: scale(1.05);
-}
-
-.recipe-output {
-    background: white;
+/* Основной конструктор */
+.constructor-main {
+    background: var(--white);
     border-radius: var(--border-radius);
     padding: 2rem;
     box-shadow: var(--shadow);
-    margin-top: 2rem;
-    display: none;
 }
 
-.recipe-output.show {
+.constructor-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.cake-preview-area h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+    text-align: center;
+}
+
+.cake-sketch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 2rem;
+    background: var(--light-gray);
+    border-radius: 16px;
+    min-height: 400px;
+}
+
+.cake-layer-slot,
+.cream-slot,
+.filling-slot {
+    border: 2px dashed var(--accent-pink);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    background: var(--white);
+}
+
+/* Коржи - самые большие и высокие */
+.cake-layer-slot {
+    width: 160px;
+    height: 80px;
+}
+
+/* Кремы - средние по размеру */
+.cream-slot {
+    width: 140px;
+    height: 50px;
+}
+
+/* Начинка - самая тонкая и маленькая */
+.filling-slot {
+    width: 120px;
+    height: 30px;
+}
+
+.cake-layer-slot:hover,
+.cream-slot:hover,
+.filling-slot:hover {
+    border-color: var(--accent-pink);
+    background: var(--primary-pink);
+    transform: scale(1.05);
+}
+
+.cake-layer-slot.selected,
+.cream-slot.selected,
+.filling-slot.selected {
+    border-color: var(--accent-pink);
+    background: var(--white);
+    box-shadow: 0 4px 16px rgba(255, 105, 180, 0.3);
+}
+
+.cake-layer-slot img,
+.cream-slot img,
+.filling-slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.placeholder {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    font-weight: 500;
+    text-align: center;
+    line-height: 1.2;
+}
+
+/* Подписи для плейсхолдеров */
+.cake-layer-slot .placeholder::before {
+    content: "Корж";
     display: block;
-    animation: fadeInUp 0.5s ease;
+    font-weight: 600;
+    color: var(--accent-pink);
+    margin-bottom: 2px;
 }
 
-/* Модальное окно */
+.cream-slot .placeholder::before {
+    content: "Крем";
+    display: block;
+    font-weight: 600;
+    color: var(--accent-pink);
+    margin-bottom: 2px;
+}
+
+.filling-slot .placeholder::before {
+    content: "Начинка";
+    display: block;
+    font-weight: 600;
+    color: var(--accent-pink);
+    margin-bottom: 2px;
+}
+
+.layer-label,
+.cream-label,
+.filling-label {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    background: var(--white);
+    padding: 2px 8px;
+    border-radius: 8px;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cake-composition-panel h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+}
+
+.composition-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.composition-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--light-gray);
+    border-radius: 12px;
+    transition: var(--transition);
+}
+
+.composition-item.selected {
+    background: var(--primary-pink);
+    border-left: 4px solid var(--accent-pink);
+}
+
+.composition-number {
+    width: 32px;
+    height: 32px;
+    background: var(--accent-pink);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.composition-name {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.composition-type {
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+ /* Кнопка рецепта */
+ .recipe-button-container {
+     text-align: center;
+     margin: 2rem 0;
+     padding: 1rem;
+     background: var(--white);
+     border-radius: var(--border-radius);
+     box-shadow: var(--shadow);
+ }
+ 
+ .recipe-btn {
+     font-size: 1.1rem;
+     padding: 1rem 2.5rem;
+     background: linear-gradient(135deg, var(--accent-pink), #e55aa0);
+     border: none;
+     color: white;
+     border-radius: 50px;
+     cursor: pointer;
+     transition: all 0.3s ease;
+     box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+     position: relative;
+     overflow: hidden;
+ }
+ 
+ .recipe-btn:hover {
+     transform: translateY(-3px);
+     box-shadow: 0 8px 25px rgba(255, 105, 180, 0.4);
+     background: linear-gradient(135deg, #e55aa0, var(--accent-pink));
+ }
+ 
+ .recipe-btn:active {
+     transform: translateY(-1px);
+ }
+ 
+ .recipe-btn i {
+     margin-right: 0.5rem;
+     font-size: 1.2rem;
+ }
+ 
+ .recipe-btn.disabled {
+     background: #ccc;
+     cursor: not-allowed;
+     transform: none;
+     box-shadow: none;
+ }
+ 
+ .recipe-btn.disabled:hover {
+     transform: none;
+     box-shadow: none;
+ }
+ 
+ /* Нижняя секция */
+ .bottom-section {
+     background: var(--light-gray);
+     border-radius: 16px;
+     padding: 2rem;
+ }
+
+.bottom-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.ingredients-panel h3,
+.recipe-panel h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+}
+
+.ingredients-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.ingredient-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background: var(--white);
+    border-radius: 8px;
+    border-left: 3px solid var(--accent-pink);
+}
+
+.ingredient-name {
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.ingredient-type {
+    font-weight: 600;
+    color: var(--accent-pink);
+}
+
+.recipe-content {
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: 12px;
+    line-height: 1.6;
+}
+
+.recipe-content h4 {
+    color: var(--accent-pink);
+    margin: 1.5rem 0 1rem;
+    font-size: 1.1rem;
+}
+
+.recipe-content h4:first-child {
+    margin-top: 0;
+}
+
+.recipe-content ol,
+.recipe-content ul {
+    padding-left: 1.5rem;
+}
+
+.recipe-content li {
+    margin-bottom: 0.5rem;
+    color: var(--text-dark);
+}
+
+/* Модальные окна */
 .modal {
     display: none;
     position: fixed;
@@ -488,14 +1053,17 @@ body {
 }
 
 .modal-content {
-    background-color: white;
+    background-color: var(--white);
     margin: 5% auto;
     padding: 2rem;
     border-radius: var(--border-radius);
     width: 90%;
-    max-width: 600px;
+    max-width: 800px;
+    max-height: 80vh;
+    overflow-y: auto;
     position: relative;
-    animation: modalSlideIn 0.3s ease;
+    box-shadow: var(--shadow-hover);
+    min-height: 400px;
 }
 
 .close {
@@ -503,6 +1071,7 @@ body {
     right: 1rem;
     top: 1rem;
     font-size: 2rem;
+    font-weight: bold;
     cursor: pointer;
     color: var(--text-light);
     transition: var(--transition);
@@ -513,13 +1082,16 @@ body {
 }
 
 .modal-body h3 {
+    color: var(--accent-pink);
     margin-bottom: 1.5rem;
-    color: var(--text-dark);
+    font-size: 1.5rem;
 }
 
-.recipe-content {
-    display: grid;
-    gap: 2rem;
+.ingredients h4,
+.instructions h4 {
+    color: var(--text-dark);
+    margin: 1.5rem 0 1rem;
+    font-size: 1.1rem;
 }
 
 .ingredients ul,
@@ -530,47 +1102,331 @@ body {
 .ingredients li,
 .instructions li {
     margin-bottom: 0.5rem;
+    color: var(--text-dark);
+}
+
+/* Модальное окно выбора ингредиентов */
+.ingredient-modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    overflow-y: auto;
+}
+
+.ingredient-slider {
+    position: relative;
+    margin-top: 2rem;
+    overflow: visible;
+    width: 100%;
+    min-height: 350px;
+    display: flex;
+    flex-direction: column;
+    /* Информация о навигации */
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 12px;
+    padding: 1rem;
+    border: 1px solid #dee2e6;
+    position: relative;
+}
+
+
+
+.slider-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--accent-pink);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: 600;
+    z-index: 10;
+    transition: var(--transition);
+    display: none; /* Скрываем кнопки в режиме прокрутки */
+    align-items: center;
+    justify-content: center;
+}
+
+.slider-nav:hover {
+    background: #e55aa0;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.slider-nav.prev {
+    left: -20px;
+}
+
+.slider-nav.next {
+    right: -20px;
+}
+
+.slider-container {
+    display: flex;
+    transition: transform 0.3s ease;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border-radius: 12px;
+    width: 100%;
+    position: relative;
+    min-height: 300px;
+    flex: 1;
+    /* Показываем все слайды в одной строке */
+    scroll-behavior: smooth;
+    /* Стилизация скроллбара */
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-pink) #f0f0f0;
+    /* Отступы для лучшей видимости */
+    padding: 0.5rem 0;
+    /* Фон для лучшей видимости */
+    background: white;
+    border-radius: 8px;
+}
+
+/* Стилизация скроллбара для WebKit браузеров */
+.slider-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.slider-container::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 4px;
+}
+
+.slider-container::-webkit-scrollbar-thumb {
+    background: var(--accent-pink);
+    border-radius: 4px;
+}
+
+.slider-container::-webkit-scrollbar-thumb:hover {
+    background: #e55aa0;
+}
+
+.slider-item {
+    min-width: 280px;
+    width: 280px;
+    padding: 1.5rem;
+    text-align: center;
+    background: white;
+    border-radius: 12px;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* Показываем все слайды в одной строке */
+    margin-right: 1rem;
+    border: 1px solid #eee;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    /* Первый слайд без отступа слева */
+    margin-left: 0;
+    /* Тень для лучшей видимости */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.slider-item:first-child {
+    margin-left: 0;
+}
+
+.slider-item:last-child {
+    margin-right: 0;
+}
+
+.slider-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: var(--accent-pink);
+    background: #fafafa;
+}
+
+.slider-item img {
+    width: 100px;
+    height: 75px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    border: 1px solid #eee;
+    background: #f9f9f9;
+    transition: transform 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.slider-item:hover img {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.item-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.item-description {
     color: var(--text-light);
+    margin-bottom: 1rem;
+    line-height: 1.4;
+    font-size: 0.9rem;
+}
+
+.ingredients-btn,
+.select-btn {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    margin: 0.3rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+    min-width: 100px;
+}
+
+.ingredients-btn {
+    background: var(--mint);
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.ingredients-btn:hover {
+    background: var(--light-mint);
+    transform: translateY(-2px);
+}
+
+.select-btn {
+    background: var(--accent-pink);
+    color: white;
+    margin-top: 0.5rem;
+}
+
+.select-btn:hover {
+    background: #e55aa0;
+    transform: translateY(-2px);
+}
+
+.slider-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+    max-width: 100%;
+    min-height: 30px;
+    align-items: center;
+    /* Скрываем точки в режиме прокрутки */
+    display: none;
+}
+
+.slider-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--light-gray);
+    cursor: pointer;
+    transition: var(--transition);
+    border: 1px solid #ddd;
+    flex-shrink: 0;
+}
+
+.slider-dot.active {
+    background: var(--accent-pink);
+}
+
+.slider-dot:hover {
+    background: var(--secondary-pink);
+}
+
+.slider-counter {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    background: var(--accent-pink);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    /* Скрываем счетчик в режиме прокрутки */
+    display: none;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Модальное окно с ингредиентами */
+.ingredients-modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.ingredients-content {
+    margin-top: 1rem;
+}
+
+.ingredients-content ul {
+    list-style: none;
+    padding: 0;
+}
+
+.ingredients-content li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background: var(--light-gray);
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    border-left: 3px solid var(--accent-pink);
+}
+
+.ingredient-name {
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.ingredient-amount {
+    font-weight: 600;
+    color: var(--accent-pink);
 }
 
 /* Анимации */
 @keyframes fadeInUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0px);
-    }
-    50% {
-        transform: translateY(-20px);
-    }
-}
-
-@keyframes modalSlideIn {
     from {
         opacity: 0;
-        transform: translateY(-50px);
+        transform: translateY(30px);
     }
     to {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+.animate {
+    animation: fadeInUp 0.6s ease-out forwards;
 }
 
 /* Адаптивность */
-@media (max-width: 768px) {
-    .nav-menu {
-        display: none;
-    }
-    
-    .nav-toggle {
-        display: flex;
-    }
-    
+@media (max-width: 1024px) {
     .hero-content {
         grid-template-columns: 1fr;
         text-align: center;
@@ -581,101 +1437,18 @@ body {
         font-size: 2.5rem;
     }
     
-    .hero-buttons {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .constructor-content {
+    .constructor-layout {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 1rem;
     }
     
-    .cakes-grid {
+    .bottom-layout {
         grid-template-columns: 1fr;
-    }
-    
-    .layer-options,
-    .cream-options {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .modal-content {
-        margin: 10% auto;
-        width: 95%;
-        padding: 1.5rem;
-    }
-    
-         /* Новые стили для конструктора */
-     .constructor-layout {
-         grid-template-columns: 1fr;
-         gap: 1rem;
-     }
-     
-     .bottom-layout {
-         grid-template-columns: 1fr;
-         gap: 1rem;
-     }
-    
-    .cake-settings {
-        padding: 1.5rem;
-    }
-    
-    .setting-group {
-        display: block;
-        margin: 1rem 0;
-    }
-    
-                                       .cake-sketch {
-           width: 300px;
-           height: 400px;
-       }
-       
-       .cake-layer-slot {
-           width: 220px;
-           height: 45px;
-       }
-       
-       .cream-slot {
-           width: 160px;
-           height: 28px;
-       }
-    
-         .ingredient-slider {
-         height: 400px;
-     }
-     
-     .slider-item img {
-         width: 160px;
-         height: 160px;
-     }
-     
-     .slider-nav {
-         width: 45px;
-         height: 45px;
-         font-size: 1.3rem;
-     }
-     
-     .slider-item .ingredients-btn {
-         padding: 0.7rem 1.2rem;
-         font-size: 0.9rem;
-     }
-     
-     .slider-item .select-btn {
-         padding: 0.8rem 1.5rem;
-         font-size: 1rem;
-     }
-    
-    .ingredients-panel, .recipe-panel {
-        padding: 1rem;
+        gap: 1rem;
     }
 }
 
-@media (max-width: 480px) {
-    .container {
-        padding: 0 1rem;
-    }
-    
+@media (max-width: 768px) {
     .hero {
         padding: 100px 1rem 2rem;
     }
@@ -684,706 +1457,193 @@ body {
         font-size: 2rem;
     }
     
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .popular-cakes,
+    .cake-constructor {
+        padding: 3rem 1rem;
+    }
+    
+    .cakes-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .cake-settings {
+        padding: 1.5rem;
+    }
+    
+    .setting-group {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .constructor-main {
+        padding: 1rem;
+    }
+    
+    .cake-sketch {
+        padding: 1rem;
+    }
+    
+    .cake-layer-slot {
+        width: 140px;
+        height: 70px;
+    }
+    
+    .cream-slot {
+        width: 120px;
+        height: 45px;
+    }
+    
+    .filling-slot {
+        width: 100px;
+        height: 25px;
+    }
+    
+    .modal-content {
+        margin: 5% auto;
+        padding: 1rem;
+        width: 95%;
+        max-width: 95%;
+    }
+    
+    .slider-item {
+        min-width: 250px;
+        width: 250px;
+        padding: 1rem;
+    }
+    
+    .slider-item img {
+        width: 80px;
+        height: 60px;
+    }
+    
+    .item-name {
+        font-size: 1rem;
+    }
+    
+    .item-description {
+        font-size: 0.8rem;
+    }
+    
+    .ingredients-btn,
+    .select-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
+        min-width: 90px;
+    }
+    
+    .slider-nav {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+    
+    .slider-nav.prev {
+        left: -17px;
+    }
+    
+    .slider-nav.next {
+        right: -17px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 1.75rem;
+    }
+    
+    .slider-item {
+        min-width: 220px;
+        width: 220px;
+        padding: 0.8rem;
+    }
+    
+    .slider-item img {
+        width: 70px;
+        height: 50px;
+    }
+    
+    .item-name {
+        font-size: 0.9rem;
+    }
+    
+    .item-description {
+        font-size: 0.75rem;
+    }
+    
+    .ingredients-btn,
+    .select-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.7rem;
+        min-width: 80px;
+    }
+    
     .section-title {
         font-size: 2rem;
     }
     
-    .layer-options,
-    .cream-options {
-        grid-template-columns: 1fr;
+    .cake-settings {
+        padding: 1rem;
     }
     
-                                       /* Новые стили для конструктора */
-       .cake-sketch {
-           width: 250px;
-           height: 350px;
-       }
-       
-       .cake-layer-slot {
-           width: 180px;
-           height: 40px;
-       }
-       
-       .cream-slot {
-           width: 140px;
-           height: 25px;
-       }
+    .constructor-main {
+        padding: 0.5rem;
+    }
     
-         .ingredient-slider {
-         height: 350px;
+    .cake-sketch {
+        padding: 0.5rem;
+    }
+    
+    .cake-layer-slot {
+        width: 120px;
+        height: 60px;
+    }
+    
+    .cream-slot {
+        width: 100px;
+        height: 40px;
+    }
+    
+    .filling-slot {
+        width: 80px;
+        height: 20px;
+    }
+    
+    .placeholder {
+        font-size: 0.8rem;
+    }
+    
+    .placeholder::before {
+        font-size: 0.9rem;
+    }
+    
+    .placeholder::after {
+        font-size: 0.6rem;
+    }
+    
+         .layer-label,
+     .cream-label,
+     .filling-label {
+         font-size: 0.65rem;
+         bottom: -20px;
      }
      
-     .slider-item img {
-         width: 120px;
-         height: 120px;
+     .recipe-btn {
+         font-size: 1rem;
+         padding: 0.8rem 2rem;
      }
      
-     .slider-nav {
-         width: 40px;
-         height: 40px;
-         font-size: 1.1rem;
+     .recipe-btn i {
+         font-size: 1rem;
      }
-     
-     .slider-item .ingredients-btn {
-         padding: 0.6rem 1rem;
-         font-size: 0.8rem;
-     }
-     
-     .slider-item .select-btn {
-         padding: 0.7rem 1.2rem;
-         font-size: 0.9rem;
-     }
-     
-     .ingredient-modal .modal-content {
-         margin: 10% auto;
-         padding: 1.5rem;
-         width: 95%;
-     }
-}
-
-/* Конструктор тортов - новые стили */
-.cake-settings {
-    background: var(--white);
-    border-radius: 20px;
-    padding: 2rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.setting-group {
-    display: inline-block;
-    margin: 0 2rem 1rem;
-    text-align: center;
-}
-
-.setting-group label {
-    display: block;
-    font-weight: 500;
-    color: var(--text-dark);
-    margin-bottom: 0.5rem;
-}
-
-.diameter-input select {
-    padding: 0.75rem 1rem;
-    border: 2px solid var(--light-pink);
-    border-radius: 12px;
-    background: var(--white);
-    font-size: 1rem;
-    color: var(--text-dark);
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.diameter-input select:focus {
-    outline: none;
-    border-color: var(--mint);
-    box-shadow: 0 0 0 3px rgba(152, 251, 152, 0.2);
-}
-
-.constructor-main {
-    margin-top: 2rem;
-}
-
- .constructor-layout {
-     display: grid;
-     grid-template-columns: 1fr 1fr;
-     gap: 2rem;
-     min-height: 600px;
-     align-items: center;
  }
-
-/* Левая панель с ингредиентами */
-.ingredients-panel {
-    background: var(--white);
-    border-radius: 20px;
-    padding: 1.5rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    height: fit-content;
-}
-
-.ingredients-panel h3 {
-    color: var(--text-dark);
-    margin-bottom: 1rem;
-    font-size: 1.2rem;
-    text-align: center;
-}
-
-.ingredients-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.ingredient-item {
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-    background: var(--light-gray);
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-}
-
-.ingredient-item:hover {
-    background: var(--light-pink);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 182, 193, 0.3);
-}
-
-.ingredient-item.selected {
-    border-color: var(--mint);
-    background: rgba(152, 251, 152, 0.1);
-}
-
-.ingredient-item img {
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
-    object-fit: cover;
-    margin-right: 1rem;
-}
-
-.ingredient-item .ingredient-info {
-    flex: 1;
-}
-
-.ingredient-item .ingredient-name {
-    font-weight: 500;
-    color: var(--text-dark);
-    margin-bottom: 0.25rem;
-}
-
-.ingredient-item .ingredient-type {
-    font-size: 0.9rem;
-    color: var(--text-light);
-}
-
- /* Центральная область с тортом */
- .cake-preview-area {
-     display: flex;
-     flex-direction: column;
-     justify-content: center;
-     align-items: center;
-     background: var(--white);
-     border-radius: 20px;
-     padding: 2rem;
-     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-     height: fit-content;
-     min-height: 500px;
- }
- 
- .cake-preview-area h3 {
-     color: var(--text-dark);
-     margin-bottom: 1.5rem;
-     font-size: 1.2rem;
-     text-align: center;
- }
-
- .cake-sketch {
-     position: relative;
-     width: 400px;
-     height: 500px;
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     justify-content: center;
-     gap: 12px;
-     margin: 0 auto;
- }
-
- .cake-layer-slot {
-     width: 280px;
-     height: 50px;
-     border-radius: 25px;
-     cursor: pointer;
-     transition: all 0.3s ease;
-     position: relative;
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     background: rgba(255, 255, 255, 0.3);
-     border: 2px dashed rgba(0, 0, 0, 0.1);
- }
-
-.cake-layer-slot:hover {
-    background: rgba(255, 182, 193, 0.2);
-    border-color: var(--light-pink);
-    transform: scale(1.02);
-}
-
-.cake-layer-slot.selected {
-    border: 2px solid var(--mint);
-    background: rgba(152, 251, 152, 0.2);
-}
-
- .cake-layer-slot img {
-     width: 100%;
-     height: 100%;
-     object-fit: cover;
-     border-radius: 25px;
- }
-
- .cream-slot {
-     width: 200px;
-     height: 30px;
-     border-radius: 15px;
-     cursor: pointer;
-     transition: all 0.3s ease;
-     position: relative;
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     background: rgba(255, 255, 255, 0.2);
-     border: 2px dashed rgba(0, 0, 0, 0.05);
- }
-
-.cream-slot:hover {
-    background: rgba(255, 182, 193, 0.15);
-    border-color: var(--light-pink);
-    transform: scale(1.02);
-}
-
-.cream-slot.selected {
-    border: 2px solid var(--mint);
-    background: rgba(152, 251, 152, 0.15);
-}
-
- .cream-slot img {
-     width: 100%;
-     height: 100%;
-     object-fit: cover;
-     border-radius: 15px;
- }
-
- /* Правая панель с составом торта */
- .cake-composition-panel {
-     background: var(--white);
-     border-radius: 20px;
-     padding: 1.5rem;
-     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-     height: fit-content;
- }
- 
- .cake-composition-panel h3 {
-     color: var(--text-dark);
-     margin-bottom: 1rem;
-     font-size: 1.2rem;
-     text-align: center;
- }
- 
- .composition-list {
-     display: flex;
-     flex-direction: column;
-     gap: 0.75rem;
- }
- 
- .composition-item {
-     display: flex;
-     align-items: center;
-     padding: 0.75rem;
-     background: var(--light-gray);
-     border-radius: 12px;
-     transition: all 0.3s ease;
-     border: 2px solid transparent;
- }
- 
- .composition-item.selected {
-     border-color: var(--mint);
-     background: rgba(152, 251, 152, 0.1);
- }
- 
- .composition-item .composition-number {
-     width: 30px;
-     height: 30px;
-     border-radius: 50%;
-     background: var(--accent-pink);
-     color: white;
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     font-weight: 600;
-     font-size: 0.9rem;
-     margin-right: 1rem;
- }
- 
- .composition-item .composition-info {
-     flex: 1;
- }
- 
- .composition-item .composition-name {
-     font-weight: 500;
-     color: var(--text-dark);
-     margin-bottom: 0.25rem;
- }
- 
- .composition-item .composition-type {
-     font-size: 0.9rem;
-     color: var(--text-light);
- }
- 
- /* Нижняя секция с ингредиентами и рецептом */
- .bottom-section {
-     margin-top: 3rem;
-     padding-top: 2rem;
-     border-top: 2px solid var(--light-gray);
- }
- 
- .bottom-layout {
-     display: grid;
-     grid-template-columns: 1fr 1fr;
-     gap: 2rem;
- }
- 
- /* Правая панель с рецептом */
- .recipe-panel {
-     background: var(--white);
-     border-radius: 20px;
-     padding: 1.5rem;
-     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-     height: fit-content;
- }
-
-.recipe-panel h3 {
-    color: var(--text-dark);
-    margin-bottom: 1rem;
-    font-size: 1.2rem;
-    text-align: center;
-}
-
-.recipe-content {
-    font-size: 0.95rem;
-    line-height: 1.6;
-}
-
-.recipe-content h4 {
-    color: var(--text-dark);
-    margin: 1rem 0 0.5rem;
-    font-size: 1.1rem;
-}
-
-.recipe-content ul, .recipe-content ol {
-    margin: 0.5rem 0;
-    padding-left: 1.5rem;
-}
-
-.recipe-content li {
-    margin-bottom: 0.5rem;
-    color: var(--text-dark);
-}
-
-/* Модальное окно выбора ингредиентов - новый слайдер */
-.ingredient-modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px);
-}
-
-.ingredient-modal .modal-content {
-    background: var(--white);
-    margin: 5% auto;
-    padding: 2rem;
-    border-radius: 20px;
-    width: 90%;
-    max-width: 800px;
-    max-height: 80vh;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    animation: modalSlideIn 0.3s ease-out;
-}
-
-.ingredient-slider {
-    position: relative;
-    width: 100%;
-    height: 500px;
-    overflow: hidden;
-}
-
-.slider-container {
-    display: flex;
-    transition: transform 0.4s ease;
-    height: 100%;
-}
-
-.slider-item {
-    min-width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem;
-    text-align: center;
-    opacity: 1;
-    transform: scale(1);
-    transition: all 0.3s ease;
-}
-
-.slider-item img {
-    width: 200px;
-    height: 200px;
-    border-radius: 20px;
-    object-fit: cover;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
-
-.slider-item .item-name {
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: var(--text-dark);
-    margin-bottom: 1rem;
-}
-
-.slider-item .item-description {
-    font-size: 1.1rem;
-    color: var(--text-light);
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-    max-width: 500px;
-}
-
-
-
-
-
-.slider-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 50px;
-    height: 50px;
-    background: var(--white);
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    color: var(--accent-pink);
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
-    z-index: 10;
-}
-
-.slider-nav:hover {
-    background: var(--accent-pink);
-    color: white;
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-}
-
-.slider-nav.prev {
-    left: 20px;
-}
-
-.slider-nav.next {
-    right: 20px;
-}
-
-.slider-nav:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-}
-
-.slider-nav:disabled:hover {
-    background: var(--white);
-    color: var(--accent-pink);
-    transform: translateY(-50%) scale(1);
-}
-
-.slider-dots {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-top: 1.5rem;
-}
-
-.slider-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--light-gray);
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.slider-dot.active {
-    background: var(--accent-pink);
-    transform: scale(1.3);
-}
-
-.slider-dot:hover {
-    background: var(--secondary-pink);
-}
-
-/* Кнопка ингредиентов */
-.slider-item .ingredients-btn {
-    background: var(--light-gray);
-    color: var(--text-dark);
-    border: 2px solid var(--accent-pink);
-    padding: 0.8rem 1.5rem;
-    border-radius: 20px;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    margin: 1rem 0 0.5rem;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.slider-item .ingredients-btn:hover {
-    background: var(--accent-pink);
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
-}
-
-.slider-item .ingredients-btn i {
-    font-size: 0.9rem;
-}
-
-/* Кнопка выбора ингредиента */
-.slider-item .select-btn {
-    background: linear-gradient(135deg, var(--accent-pink), var(--secondary-pink));
-    color: white;
-    border: none;
-    padding: 1rem 2rem;
-    border-radius: 25px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 0.5rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
-}
-
-.slider-item .select-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(255, 105, 180, 0.4);
-}
-
-.slider-item .select-btn:active {
-    transform: translateY(0);
-}
-
-/* Индикатор текущего слайда */
-.slider-counter {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    color: var(--text-dark);
-    font-weight: 500;
-    z-index: 5;
-}
-
-/* Модальное окно с ингредиентами */
-.ingredients-modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px);
-}
-
-.ingredients-modal .modal-content {
-    background: var(--white);
-    margin: 10% auto;
-    padding: 2rem;
-    border-radius: 20px;
-    width: 90%;
-    max-width: 600px;
-    max-height: 70vh;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    animation: modalSlideIn 0.3s ease-out;
-}
-
-.ingredients-content {
-    max-height: 400px;
-    overflow-y: auto;
-    padding: 1rem 0;
-}
-
-.ingredients-content ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.ingredients-content li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    margin-bottom: 0.5rem;
-    background: var(--light-gray);
-    border-radius: 12px;
-    border-left: 4px solid var(--accent-pink);
-}
-
-.ingredients-content .ingredient-name {
-    font-weight: 500;
-    color: var(--text-dark);
-    flex: 1;
-}
-
-.ingredients-content .ingredient-amount {
-    background: var(--accent-pink);
-    color: white;
-    padding: 0.3rem 0.8rem;
-    border-radius: 15px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    min-width: 80px;
-    text-align: center;
-}
-
-/* Дополнительные стили для улучшения UX */
-.cake-layer-slot::before {
-    content: "Кликните для выбора";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 0.8rem;
-    color: var(--text-light);
-    pointer-events: none;
-    opacity: 0.7;
-}
-
-.cake-layer-slot.selected::before {
-    display: none;
-}
-
-.cream-slot::before {
-    content: "Крем";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 0.7rem;
-    color: var(--text-light);
-    pointer-events: none;
-    opacity: 0.7;
-}
-
-.cream-slot.selected::before {
-    display: none;
-}

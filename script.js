@@ -1,194 +1,11 @@
-// Данные о популярных тортах
-const cakeData = {
-    chocolate: {
-        name: "Шоколадный торт",
-        ingredients: [
-            "200г муки",
-            "200г сахара",
-            "100г какао-порошка",
-            "4 яйца",
-            "200мл молока",
-            "100мл растительного масла",
-            "1 ч.л. разрыхлителя",
-            "1 ч.л. ванилина"
-        ],
-        instructions: [
-            "Разогрейте духовку до 180°C",
-            "Смешайте сухие ингредиенты",
-            "Взбейте яйца с сахаром",
-            "Добавьте молоко и масло",
-            "Соедините все ингредиенты",
-            "Выпекайте 25-30 минут"
-        ]
-    },
-    vanilla: {
-        name: "Ванильный торт",
-        ingredients: [
-            "250г муки",
-            "200г сахара",
-            "3 яйца",
-            "150мл молока",
-            "100мл растительного масла",
-            "1 ч.л. разрыхлителя",
-            "2 ч.л. ванилина"
-        ],
-        instructions: [
-            "Разогрейте духовку до 175°C",
-            "Смешайте муку и разрыхлитель",
-            "Взбейте яйца с сахаром",
-            "Добавьте молоко и масло",
-            "Соедините все ингредиенты",
-            "Выпекайте 20-25 минут"
-        ]
-    },
-    "red-velvet": {
-        name: "Красный бархат",
-        ingredients: [
-            "250г муки",
-            "200г сахара",
-            "2 яйца",
-            "150мл пахты",
-            "100мл растительного масла",
-            "2 ст.л. какао-порошка",
-            "1 ч.л. разрыхлителя",
-            "Красный пищевой краситель"
-        ],
-        instructions: [
-            "Разогрейте духовку до 180°C",
-            "Смешайте сухие ингредиенты",
-            "Взбейте яйца с сахаром",
-            "Добавьте пахту и масло",
-            "Добавьте краситель",
-            "Выпекайте 25-30 минут"
-        ]
-    },
-    carrot: {
-        name: "Морковный торт",
-        ingredients: [
-            "200г муки",
-            "200г сахара",
-            "3 яйца",
-            "200г тертой моркови",
-            "100мл растительного масла",
-            "1 ч.л. разрыхлителя",
-            "1 ч.л. корицы",
-            "50г грецких орехов"
-        ],
-        instructions: [
-            "Разогрейте духовку до 175°C",
-            "Смешайте сухие ингредиенты",
-            "Взбейте яйца с сахаром",
-            "Добавьте масло и морковь",
-            "Добавьте орехи",
-            "Выпекайте 30-35 минут"
-        ]
-    },
-    tiramisu: {
-        name: "Тирамису",
-        ingredients: [
-            "6 яичных желтков",
-            "100г сахара",
-            "500г маскарпоне",
-            "300мл крепкого кофе",
-            "200г савоярди",
-            "Какао-порошок для посыпки"
-        ],
-        instructions: [
-            "Взбейте желтки с сахаром",
-            "Добавьте маскарпоне",
-            "Охладите кофе",
-            "Обмакните савоярди в кофе",
-            "Выложите слоями",
-            "Посыпьте какао"
-        ]
-    },
-    cheesecake: {
-        name: "Чизкейк",
-        ingredients: [
-            "200г песочного печенья",
-            "100г сливочного масла",
-            "500г творожного сыра",
-            "200г сахара",
-            "3 яйца",
-            "200мл сметаны",
-            "1 ч.л. ванилина"
-        ],
-        instructions: [
-            "Измельчите печенье",
-            "Смешайте с растопленным маслом",
-            "Взбейте сыр с сахаром",
-            "Добавьте яйца и сметану",
-            "Выпекайте 45-50 минут",
-            "Охладите в духовке"
-        ]
-    },
-    "black-forest": {
-        name: "Черный лес",
-        ingredients: [
-            "200г муки",
-            "200г сахара",
-            "100г какао-порошка",
-            "4 яйца",
-            "200мл молока",
-            "100мл растительного масла",
-            "400г вишни",
-            "500г взбитых сливок"
-        ],
-        instructions: [
-            "Приготовьте шоколадный бисквит",
-            "Взбейте сливки с сахаром",
-            "Подготовьте вишни",
-            "Соберите торт слоями",
-            "Украсьте вишнями",
-            "Посыпьте шоколадной стружкой"
-        ]
-    },
-    opera: {
-        name: "Опера",
-        ingredients: [
-            "150г миндальной муки",
-            "150г сахара",
-            "6 яиц",
-            "100г темного шоколада",
-            "200г сливочного масла",
-            "100мл крепкого кофе",
-            "50г какао-порошка"
-        ],
-        instructions: [
-            "Приготовьте миндальный бисквит",
-            "Сделайте кофейный сироп",
-            "Приготовьте шоколадный ганаш",
-            "Соберите слои",
-            "Покройте шоколадной глазурью",
-            "Охладите перед подачей"
-        ]
-    }
-};
-
-// Данные о коржах и кремах
-const layers = [
-    { id: 'chocolate', name: 'Шоколадный', image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=80&h=60&fit=crop', description: 'Классический шоколадный корж' },
-    { id: 'vanilla', name: 'Ванильный', image: 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=80&h=60&fit=crop', description: 'Нежный ванильный корж' },
-    { id: 'red-velvet', name: 'Красный бархат', image: 'https://images.unsplash.com/photo-1571115764595-644a1f56a55c?w=80&h=60&fit=crop', description: 'Элегантный красный корж' },
-    { id: 'carrot', name: 'Морковный', image: 'https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=80&h=60&fit=crop', description: 'Полезный морковный корж' },
-    { id: 'almond', name: 'Миндальный', image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=80&h=60&fit=crop', description: 'Ароматный миндальный корж' },
-    { id: 'coconut', name: 'Кокосовый', image: 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=80&h=60&fit=crop', description: 'Экзотический кокосовый корж' }
-];
-
-const creams = [
-    { id: 'chocolate', name: 'Шоколадный', image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=80&h=60&fit=crop', description: 'Богатый шоколадный крем' },
-    { id: 'vanilla', name: 'Ванильный', image: 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=80&h=60&fit=crop', description: 'Нежный ванильный крем' },
-    { id: 'strawberry', name: 'Клубничный', image: 'https://images.unsplash.com/photo-1571115764595-644a1f56a55c?w=80&h=60&fit=crop', description: 'Свежий клубничный крем' },
-    { id: 'coffee', name: 'Кофейный', image: 'https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=80&h=60&fit=crop', description: 'Ароматный кофейный крем' },
-    { id: 'cherry', name: 'Вишневый', image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=80&h=60&fit=crop', description: 'Яркий вишневый крем' },
-    { id: 'lemon', name: 'Лимонный', image: 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=80&h=60&fit=crop', description: 'Освежающий лимонный крем' },
-    { id: 'raspberry', name: 'Малиновый', image: 'https://images.unsplash.com/photo-1571115764595-644a1f56a55c?w=80&h=60&fit=crop', description: 'Нежный малиновый крем' }
-];
+// Основной скрипт для конструктора тортов
+// Данные импортируются из data.js
 
 // Глобальные переменные
 let layerCount = 3;
 let selectedLayers = [];
 let selectedCreams = [];
+let selectedFillings = []; // Массив начинок для каждого слоя
 let currentModalType = '';
 let currentModalIndex = 0;
 let currentSlideIndex = 0;
@@ -199,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setupSmoothScrolling();
     setupEventListeners();
     initializeConstructor();
+    setupMobileMenu();
 });
 
 // Настройка плавной прокрутки
@@ -217,20 +35,49 @@ function setupSmoothScrolling() {
     });
 }
 
+// Настройка мобильного меню
+function setupMobileMenu() {
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    if (navToggle && navMenu) {
+        navToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            navToggle.classList.toggle('active');
+        });
+    }
+}
+
 // Настройка обработчиков событий
 function setupEventListeners() {
     // Обработчики для карточек популярных тортов
     document.querySelectorAll('.cake-card').forEach(card => {
-        card.addEventListener('click', function() {
-            const cakeType = this.getAttribute('data-cake');
-            showRecipeModal(cakeType);
+        card.addEventListener('click', function(e) {
+            // Проверяем, что клик не по кнопке
+            if (!e.target.classList.contains('btn')) {
+                const cakeType = this.getAttribute('data-cake');
+                showRecipeModal(cakeType);
+            }
         });
+        
+        // Обработчик для кнопки рецепта
+        const recipeBtn = card.querySelector('.btn');
+        if (recipeBtn) {
+            recipeBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const cakeType = card.getAttribute('data-cake');
+                showRecipeModal(cakeType);
+            });
+        }
     });
 
     // Обработчик для закрытия модального окна с рецептом
-    document.querySelector('.modal .close').addEventListener('click', function() {
-        document.getElementById('recipeModal').style.display = 'none';
-    });
+    const recipeModalClose = document.querySelector('#recipeModal .close');
+    if (recipeModalClose) {
+        recipeModalClose.addEventListener('click', function() {
+            document.getElementById('recipeModal').style.display = 'none';
+        });
+    }
 
     // Обработчик для закрытия модального окна с рецептом при клике вне его
     window.addEventListener('click', function(event) {
@@ -255,12 +102,21 @@ function setupEventListeners() {
             closeIngredientsModal();
         }
     });
+
+    // Обработчики для навигации
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function() {
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
 }
 
 // Инициализация конструктора
 function initializeConstructor() {
     selectedLayers = new Array(layerCount).fill(null);
     selectedCreams = new Array(layerCount - 1).fill(null);
+    selectedFillings = new Array(layerCount).fill(null);
     updateLayerCountDisplay();
 }
 
@@ -271,13 +127,29 @@ function changeLayers(delta) {
         layerCount = newCount;
         selectedLayers = new Array(layerCount).fill(null);
         selectedCreams = new Array(layerCount - 1).fill(null);
+        selectedFillings = new Array(layerCount).fill(null);
         updateLayerCountDisplay();
+        
+        // Скрываем кнопку рецепта и нижнюю секцию при изменении количества слоев
+        const recipeButtonContainer = document.getElementById('recipeButtonContainer');
+        const bottomSection = document.getElementById('bottomSection');
+        if (recipeButtonContainer) recipeButtonContainer.style.display = 'none';
+        if (bottomSection) bottomSection.style.display = 'none';
+        
+        // Обновляем эскиз если конструктор уже запущен
+        if (document.getElementById('constructorMain').style.display !== 'none') {
+            updateCakeSketch();
+            updateCompositionPanel();
+        }
     }
 }
 
 // Обновление отображения количества коржей
 function updateLayerCountDisplay() {
-    document.getElementById('layerCount').textContent = layerCount;
+    const layerCountElement = document.getElementById('layerCount');
+    if (layerCountElement) {
+        layerCountElement.textContent = layerCount;
+    }
 }
 
 // Запуск конструктора
@@ -285,16 +157,34 @@ function startConstructor() {
     const settings = document.getElementById('cakeSettings');
     const main = document.getElementById('constructorMain');
     
-    settings.style.display = 'none';
-    main.style.display = 'block';
-    
-    updateCakeSketch();
-    updateCompositionPanel();
+    if (settings && main) {
+        settings.style.display = 'none';
+        main.style.display = 'block';
+        
+        // Скрываем кнопку рецепта и нижнюю секцию при запуске
+        const recipeButtonContainer = document.getElementById('recipeButtonContainer');
+        const bottomSection = document.getElementById('bottomSection');
+        if (recipeButtonContainer) recipeButtonContainer.style.display = 'none';
+        if (bottomSection) bottomSection.style.display = 'none';
+        
+        updateCakeSketch();
+        updateCompositionPanel();
+        
+        // Плавно прокручиваем к конструктору
+        setTimeout(() => {
+            main.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }, 100);
+    }
 }
 
 // Обновление эскиза торта
 function updateCakeSketch() {
     const sketch = document.getElementById('cakeSketch');
+    if (!sketch) return;
+    
     sketch.innerHTML = '';
     
     for (let i = 0; i < layerCount; i++) {
@@ -305,28 +195,57 @@ function updateCakeSketch() {
         
         if (selectedLayers[i]) {
             const layer = layers.find(l => l.id === selectedLayers[i]);
-            const img = document.createElement('img');
-            img.src = layer.image;
-            img.alt = layer.name;
-            layerSlot.appendChild(img);
-            layerSlot.classList.add('selected');
+            if (layer) {
+                const img = document.createElement('img');
+                img.src = layer.image;
+                img.alt = layer.name;
+                layerSlot.appendChild(img);
+                layerSlot.classList.add('selected');
+            }
+        } else {
+            layerSlot.innerHTML = '<div class="placeholder"></div>';
         }
         
         sketch.appendChild(layerSlot);
         
-        // Добавляем крем (кроме последнего коржа)
+        // Добавляем начинку и крем (кроме последнего коржа)
         if (i < layerCount - 1) {
+            // Добавляем начинку
+            const fillingSlot = document.createElement('div');
+            fillingSlot.className = 'filling-slot';
+            fillingSlot.onclick = () => showIngredientModal('filling', i);
+            
+            if (selectedFillings[i]) {
+                const filling = fillings.find(f => f.id === selectedFillings[i]);
+                if (filling) {
+                    const img = document.createElement('img');
+                    img.src = filling.image;
+                    img.alt = filling.name;
+                    fillingSlot.appendChild(img);
+                    fillingSlot.classList.add('selected');
+                }
+            } else {
+                fillingSlot.innerHTML = '<div class="placeholder"></div>';
+            }
+            
+            sketch.appendChild(fillingSlot);
+            
+            // Добавляем крем
             const creamSlot = document.createElement('div');
             creamSlot.className = 'cream-slot';
             creamSlot.onclick = () => showIngredientModal('cream', i);
             
             if (selectedCreams[i]) {
                 const cream = creams.find(c => c.id === selectedCreams[i]);
-                const img = document.createElement('img');
-                img.src = cream.image;
-                img.alt = cream.name;
-                creamSlot.appendChild(img);
-                creamSlot.classList.add('selected');
+                if (cream) {
+                    const img = document.createElement('img');
+                    img.src = cream.image;
+                    img.alt = cream.name;
+                    creamSlot.appendChild(img);
+                    creamSlot.classList.add('selected');
+                }
+            } else {
+                creamSlot.innerHTML = '<div class="placeholder"></div>';
             }
             
             sketch.appendChild(creamSlot);
@@ -345,30 +264,55 @@ function showIngredientModal(type, index) {
     const sliderContainer = document.getElementById('sliderContainer');
     const sliderDots = document.getElementById('sliderDots');
     
-    title.textContent = type === 'layer' ? 'Выберите корж' : 'Выберите крем';
+    if (!modal || !title || !sliderContainer || !sliderDots) return;
+    
+    // Устанавливаем заголовок в зависимости от типа
+    if (type === 'layer') {
+        title.textContent = 'Выберите корж';
+    } else if (type === 'cream') {
+        title.textContent = 'Выберите крем';
+    } else if (type === 'filling') {
+        title.textContent = 'Выберите начинку';
+    }
     
     // Получаем список ингредиентов
-    currentIngredients = type === 'layer' ? layers : creams;
+    if (type === 'layer') {
+        currentIngredients = layers;
+    } else if (type === 'cream') {
+        currentIngredients = creams;
+    } else if (type === 'filling') {
+        currentIngredients = fillings;
+    }
+    
+    // Отладочная информация
+    console.log(`Открыт слайдер для ${type}, количество элементов: ${currentIngredients.length}`);
+    
+    // Проверяем данные
+    if (!currentIngredients || currentIngredients.length === 0) {
+        console.error('Нет данных для слайдера:', type);
+        return;
+    }
     
     // Очищаем слайдер
     sliderContainer.innerHTML = '';
     sliderDots.innerHTML = '';
     
-    // Создаем слайды с расширенным составом
+    // Создаем слайды с оптимизированной загрузкой
+    const fragment = document.createDocumentFragment();
+    const dotsFragment = document.createDocumentFragment();
+    
     currentIngredients.forEach((ingredient, i) => {
         const slide = document.createElement('div');
         slide.className = 'slider-item';
         
-
-        
         slide.innerHTML = `
-            <img src="${ingredient.image}" alt="${ingredient.name}">
+            <img src="${ingredient.image}" alt="${ingredient.name}" loading="lazy">
             <div class="item-name">${ingredient.name}</div>
             <div class="item-description">${ingredient.description}</div>
             <button class="ingredients-btn" onclick="showIngredientsModal('${type}', '${ingredient.name}')">
                 <i class="fas fa-list"></i> Ингредиенты
             </button>
-            <button class="select-btn">Выбрать ${type === 'layer' ? 'корж' : 'крем'}</button>
+            <button class="select-btn">Выбрать ${type === 'layer' ? 'корж' : type === 'cream' ? 'крем' : 'начинку'}</button>
         `;
         
         // Добавляем обработчик клика для кнопки выбора
@@ -378,14 +322,28 @@ function showIngredientModal(type, index) {
             selectIngredient(ingredient);
         };
         
-        sliderContainer.appendChild(slide);
+        fragment.appendChild(slide);
         
         // Создаем точку навигации
         const dot = document.createElement('div');
         dot.className = 'slider-dot';
         if (i === 0) dot.classList.add('active');
         dot.onclick = () => goToSlide(i);
-        sliderDots.appendChild(dot);
+        dotsFragment.appendChild(dot);
+    });
+    
+    sliderContainer.appendChild(fragment);
+    sliderDots.appendChild(dotsFragment);
+    
+    // Проверяем созданные элементы
+    const createdSlides = sliderContainer.querySelectorAll('.slider-item');
+    const createdDots = sliderDots.querySelectorAll('.slider-dot');
+    console.log(`Создано слайдов: ${createdSlides.length}, точек: ${createdDots.length}`);
+    
+    // Проверяем видимость слайдов
+    createdSlides.forEach((slide, index) => {
+        const rect = slide.getBoundingClientRect();
+        console.log(`Слайд ${index}: ширина=${slide.offsetWidth}, высота=${slide.offsetHeight}, видим=${rect.width > 0 && rect.height > 0}`);
     });
     
     // Обновляем навигацию
@@ -394,8 +352,43 @@ function showIngredientModal(type, index) {
     // Добавляем поддержку свайпов для мобильных устройств
     addSwipeSupport();
     
+    // Добавляем поддержку drag для горизонтальной прокрутки
+    addDragSupport();
+    
     // Добавляем индикатор текущего слайда
     addSliderCounter();
+    
+    // Принудительно обновляем отображение
+    setTimeout(() => {
+        // Дополнительная проверка
+        const slides = sliderContainer.querySelectorAll('.slider-item');
+        const dots = sliderDots.querySelectorAll('.slider-dot');
+        console.log(`Финальная проверка: ${slides.length} слайдов, ${dots.length} точек`);
+        console.log('Первый слайд видим:', slides[0] ? slides[0].offsetWidth > 0 : false);
+        
+        // Принудительно обновляем после загрузки изображений
+        const images = sliderContainer.querySelectorAll('img');
+        let loadedImages = 0;
+        images.forEach(img => {
+            if (img.complete) {
+                loadedImages++;
+            } else {
+                img.onload = () => {
+                    loadedImages++;
+                    if (loadedImages === images.length) {
+                        console.log('Все изображения загружены');
+                    }
+                };
+            }
+        });
+        if (loadedImages === images.length) {
+            console.log('Все изображения уже загружены');
+        }
+        
+        // Показываем информацию о слайдере
+        console.log('Слайдер готов к использованию');
+        console.log('Используйте горизонтальную прокрутку для навигации');
+    }, 100);
     
     modal.style.display = 'block';
 }
@@ -404,8 +397,10 @@ function showIngredientModal(type, index) {
 function selectIngredient(ingredient) {
     if (currentModalType === 'layer') {
         selectedLayers[currentModalIndex] = ingredient.id;
-    } else {
+    } else if (currentModalType === 'cream') {
         selectedCreams[currentModalIndex] = ingredient.id;
+    } else if (currentModalType === 'filling') {
+        selectedFillings[currentModalIndex] = ingredient.id; // Сохраняем выбранную начинку
     }
     
     closeIngredientModal();
@@ -418,12 +413,17 @@ function selectIngredient(ingredient) {
 
 // Закрыть модальное окно выбора ингредиентов
 function closeIngredientModal() {
-    document.getElementById('ingredientModal').style.display = 'none';
+    const modal = document.getElementById('ingredientModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
 }
 
 // Обновление панели состава торта
 function updateCompositionPanel() {
     const list = document.getElementById('compositionList');
+    if (!list) return;
+    
     list.innerHTML = '';
     
     let itemIndex = 1;
@@ -432,21 +432,36 @@ function updateCompositionPanel() {
     selectedLayers.forEach((layerId, index) => {
         if (layerId) {
             const layer = layers.find(l => l.id === layerId);
-            const item = createCompositionItem(layer, `Корж ${index + 1}`, itemIndex);
-            list.appendChild(item);
-            itemIndex++;
+            if (layer) {
+                const item = createCompositionItem(layer, `Корж ${index + 1}`, itemIndex);
+                list.appendChild(item);
+                itemIndex++;
+            }
         }
     });
     
-    // Добавляем выбранные кремы
-    selectedCreams.forEach((creamId, index) => {
-        if (creamId) {
-            const cream = creams.find(c => c.id === creamId);
-            const item = createCompositionItem(cream, `Крем ${index + 1}`, itemIndex);
-            list.appendChild(item);
-            itemIndex++;
+    // Добавляем выбранные начинки и кремы
+    for (let i = 0; i < selectedCreams.length; i++) {
+        // Добавляем начинку
+        if (selectedFillings[i]) {
+            const filling = fillings.find(f => f.id === selectedFillings[i]);
+            if (filling) {
+                const item = createCompositionItem(filling, `Начинка ${i + 1}`, itemIndex);
+                list.appendChild(item);
+                itemIndex++;
+            }
         }
-    });
+        
+        // Добавляем крем
+        if (selectedCreams[i]) {
+            const cream = creams.find(c => c.id === selectedCreams[i]);
+            if (cream) {
+                const item = createCompositionItem(cream, `Крем ${i + 1}`, itemIndex);
+                list.appendChild(item);
+                itemIndex++;
+            }
+        }
+    }
 }
 
 // Создание элемента состава торта
@@ -469,45 +484,39 @@ function createCompositionItem(ingredient, type, number) {
 function checkCakeCompletion() {
     const allLayersSelected = selectedLayers.every(layer => layer !== null);
     const allCreamsSelected = selectedCreams.every(cream => cream !== null);
+    const allFillingsSelected = selectedFillings.slice(0, selectedCreams.length).every(filling => filling !== null);
     
-    if (allLayersSelected && allCreamsSelected) {
-        // Показываем нижнюю секцию
-        const bottomSection = document.getElementById('bottomSection');
-        bottomSection.style.display = 'block';
-        
-        // Обновляем панели
-        updateIngredientsPanel();
-        updateRecipePanel();
-        
-        // Плавно прокручиваем к нижней секции
-        setTimeout(() => {
-            bottomSection.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }, 500);
+    if (allLayersSelected && allCreamsSelected && allFillingsSelected) {
+        // Показываем только кнопку рецепта
+        const recipeButtonContainer = document.getElementById('recipeButtonContainer');
+        if (recipeButtonContainer) {
+            recipeButtonContainer.style.display = 'block';
+        }
     }
 }
 
 // Обновление панели ингредиентов
 function updateIngredientsPanel() {
     const list = document.getElementById('ingredientsList');
+    if (!list) return;
+    
     list.innerHTML = '';
     
     // Добавляем точные количества ингредиентов
-    const diameter = parseInt(document.getElementById('diameterSelect').value);
-    const multiplier = diameter / 18; // Базовый размер 18см
+    const diameter = parseInt(document.getElementById('diameterSelect').value) || 18;
+    const multiplier = ingredientCalculator.sizeMultipliers[diameter] || 1;
     
     const ingredients = [
-        { name: 'Мука пшеничная', amount: `${Math.round(200 * multiplier)}г` },
-        { name: 'Сахар', amount: `${Math.round(150 * multiplier)}г` },
-        { name: 'Яйца', amount: `${Math.round(3 * multiplier)} шт` },
-        { name: 'Масло сливочное', amount: `${Math.round(100 * multiplier)}г` },
-        { name: 'Молоко', amount: `${Math.round(200 * multiplier)}мл` },
-        { name: 'Разрыхлитель', amount: `${Math.round(1 * multiplier)} ч.л.` },
-        { name: 'Ванилин', amount: `${Math.round(1 * multiplier)} ч.л.` },
+        { name: 'Мука пшеничная высшего сорта', amount: `${Math.round(200 * multiplier)}г` },
+        { name: 'Сахар-песок', amount: `${Math.round(150 * multiplier)}г` },
+        { name: 'Яйца категории А', amount: `${Math.round(3 * multiplier)} шт` },
+        { name: 'Сливочное масло 82.5%', amount: `${Math.round(100 * multiplier)}г` },
+        { name: 'Молоко 3.2%', amount: `${Math.round(200 * multiplier)}мл` },
+        { name: 'Разрыхлитель теста', amount: `${Math.round(1 * multiplier)} ч.л.` },
+        { name: 'Ванильный экстракт', amount: `${Math.round(1 * multiplier)} ч.л.` },
+        { name: 'Соль', amount: `${Math.round(0.5 * multiplier)} ч.л.` },
         { name: 'Сахарная пудра (для крема)', amount: `${Math.round(100 * multiplier)}г` },
-        { name: 'Сливки 33%', amount: `${Math.round(300 * multiplier)}мл` }
+        { name: 'Сливки 33-35%', amount: `${Math.round(300 * multiplier)}мл` }
     ];
     
     ingredients.forEach(ingredient => {
@@ -534,14 +543,15 @@ function createIngredientItem(ingredient, type) {
 // Обновление панели рецепта
 function updateRecipePanel() {
     const content = document.getElementById('recipeContent');
+    if (!content) return;
     
-    if (!selectedLayers.some(l => l) && !selectedCreams.some(c => c)) {
-        content.innerHTML = '<p>Выберите коржи и кремы для получения рецепта</p>';
+    if (!selectedLayers.some(l => l) && !selectedCreams.some(c => c) && !selectedFillings.some(f => f)) { // Проверяем все слои
+        content.innerHTML = '<p>Выберите коржи, кремы и начинку для получения рецепта</p>';
         return;
     }
     
-    const recipe = generateRecipe();
-    content.innerHTML = recipe;
+    // Показываем сообщение о необходимости нажать кнопку рецепта
+    content.innerHTML = '<p>Нажмите кнопку "Показать рецепт" для получения подробных инструкций</p>';
 }
 
 // Генерация рецепта
@@ -550,14 +560,14 @@ function generateRecipe() {
     
     // Рецепт для коржей
     recipe += `
-        <li>Разогрейте духовку до 180°C</li>
+        <li>Разогрейте духовку до 180°C, смажьте формы маслом</li>
         <li>Смешайте муку, сахар и разрыхлитель в большой миске</li>
         <li>Взбейте яйца с сахаром до пышности (около 5 минут)</li>
         <li>Добавьте молоко и растопленное масло, продолжая взбивать</li>
         <li>Соедините сухие и жидкие ингредиенты, аккуратно перемешивая</li>
         <li>Разделите тесто на ${layerCount} равных частей</li>
         <li>Выпекайте каждый корж 25-30 минут до готовности</li>
-        <li>Охладите коржи на решетке</li>
+        <li>Остудите коржи на решетке</li>
     `;
     
     recipe += '</ol><h4>Приготовление кремов:</h4><ol>';
@@ -570,12 +580,26 @@ function generateRecipe() {
         <li>При необходимости добавьте немного молока для нужной консистенции</li>
     `;
     
+    // Рецепт для начинки
+    if (selectedFillings[0]) { // Используем selectedFillings[0] для первого слоя
+        const filling = fillings.find(f => f.id === selectedFillings[0]);
+        if (filling) {
+            recipe += '</ol><h4>Приготовление начинки:</h4><ol>';
+            recipe += `
+                <li>Подготовьте выбранное конфи или мармелад</li>
+                <li>При необходимости разогрейте для лучшей консистенции</li>
+                <li>Остудите до комнатной температуры перед использованием</li>
+            `;
+        }
+    }
+    
     recipe += '</ol><h4>Сборка торта:</h4><ol>';
     
     // Инструкции по сборке
     recipe += `
         <li>Убедитесь, что коржи полностью остыли</li>
         <li>Промажьте каждый корж кремом равномерным слоем</li>
+        ${selectedFillings[0] ? '<li>Добавьте слой начинки между первым коржем и кремом</li>' : ''}
         <li>Сложите коржи друг на друга в правильном порядке</li>
         <li>Покройте боковые стороны и верх торта кремом</li>
         <li>Украсьте торт по желанию (фрукты, шоколад, орехи)</li>
@@ -587,6 +611,35 @@ function generateRecipe() {
     return recipe;
 }
 
+// Показать рецепт для созданного торта
+function showRecipe() {
+    const content = document.getElementById('recipeContent');
+    const bottomSection = document.getElementById('bottomSection');
+    if (!content || !bottomSection) return;
+    
+    // Показываем нижнюю секцию с ингредиентами и рецептом
+    bottomSection.style.display = 'block';
+    
+    // Обновляем панели ингредиентов и рецепта
+    updateIngredientsPanel();
+    
+    const recipe = generateRecipe();
+    content.innerHTML = recipe;
+    
+    // Прокручиваем к рецепту
+    content.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    
+    // Добавляем анимацию появления
+    content.style.opacity = '0';
+    content.style.transform = 'translateY(20px)';
+    
+    setTimeout(() => {
+        content.style.transition = 'all 0.5s ease';
+        content.style.opacity = '1';
+        content.style.transform = 'translateY(0)';
+    }, 100);
+}
+
 // Показать модальное окно с рецептом популярного торта
 function showRecipeModal(cakeType) {
     const cake = cakeData[cakeType];
@@ -596,6 +649,8 @@ function showRecipeModal(cakeType) {
     const title = document.getElementById('modalTitle');
     const ingredientsList = document.getElementById('ingredientsList');
     const instructionsList = document.getElementById('instructionsList');
+    
+    if (!modal || !title || !ingredientsList || !instructionsList) return;
     
     title.textContent = cake.name;
     
@@ -653,8 +708,11 @@ function goToSlide(index) {
     const container = document.getElementById('sliderContainer');
     const dots = document.querySelectorAll('.slider-dot');
     
+    if (!container) return;
+    
     // Перемещаем слайдер (каждый слайд занимает 100% ширины)
-    container.style.transform = `translateX(-${index * 100}%)`;
+    const translateX = -index * 100;
+    container.style.transform = `translateX(${translateX}%)`;
     
     // Обновляем активную точку
     dots.forEach((dot, i) => {
@@ -680,6 +738,8 @@ function updateSliderNavigation() {
 // Добавление поддержки свайпов для мобильных устройств
 function addSwipeSupport() {
     const slider = document.querySelector('.ingredient-slider');
+    if (!slider) return;
+    
     let startX = 0;
     let endX = 0;
     
@@ -711,6 +771,7 @@ function addSwipeSupport() {
 // Добавление индикатора текущего слайда
 function addSliderCounter() {
     const slider = document.querySelector('.ingredient-slider');
+    if (!slider) return;
     
     // Удаляем существующий счетчик, если есть
     const existingCounter = slider.querySelector('.slider-counter');
@@ -724,6 +785,41 @@ function addSliderCounter() {
     counter.textContent = `${currentSlideIndex + 1} из ${currentIngredients.length}`;
     
     slider.appendChild(counter);
+}
+
+// Добавление поддержки drag для горизонтальной прокрутки
+function addDragSupport() {
+    const sliderContainer = document.getElementById('sliderContainer');
+    if (!sliderContainer) return;
+    
+    let isDragging = false;
+    let startX = 0;
+    let scrollLeft = 0;
+    
+    sliderContainer.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        sliderContainer.classList.add('dragging');
+        startX = e.pageX - sliderContainer.offsetLeft;
+        scrollLeft = sliderContainer.scrollLeft;
+    });
+    
+    sliderContainer.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX - sliderContainer.offsetLeft;
+        const walk = (x - startX) * 2; // Скорость прокрутки
+        sliderContainer.scrollLeft = scrollLeft - walk;
+    });
+    
+    sliderContainer.addEventListener('mouseup', () => {
+        isDragging = false;
+        sliderContainer.classList.remove('dragging');
+    });
+    
+    sliderContainer.addEventListener('mouseleave', () => {
+        isDragging = false;
+        sliderContainer.classList.remove('dragging');
+    });
 }
 
 // Обновление счетчика слайдера
@@ -740,6 +836,8 @@ function showIngredientsModal(type, itemName) {
     const title = document.getElementById('ingredientsModalTitle');
     const ingredientsList = document.getElementById('ingredientsModalList');
     
+    if (!modal || !title || !ingredientsList) return;
+    
     title.textContent = `Ингредиенты для ${itemName}`;
     
     // Очищаем список
@@ -751,8 +849,8 @@ function showIngredientsModal(type, itemName) {
         ingredientsData = [
             { name: 'Мука пшеничная высшего сорта', amount: '200г' },
             { name: 'Сахар-песок', amount: '150г' },
-            { name: 'Яйца куриные', amount: '3 шт' },
-            { name: 'Масло сливочное 82.5%', amount: '100г' },
+            { name: 'Яйца куриные категории А', amount: '3 шт' },
+            { name: 'Сливочное масло 82.5%', amount: '100г' },
             { name: 'Молоко 3.2%', amount: '200мл' },
             { name: 'Разрыхлитель теста', amount: '1 ч.л.' },
             { name: 'Соль', amount: '0.5 ч.л.' },
@@ -765,7 +863,7 @@ function showIngredientsModal(type, itemName) {
             { name: 'Цедра лимона', amount: '1 ч.л.' },
             { name: 'Цедра апельсина', amount: '1 ч.л.' }
         ];
-    } else {
+    } else if (type === 'cream') {
         ingredientsData = [
             { name: 'Сливочное масло 82.5%', amount: '200г' },
             { name: 'Сахарная пудра', amount: '150г' },
@@ -782,6 +880,14 @@ function showIngredientsModal(type, itemName) {
             { name: 'Экстракт миндаля', amount: '0.5 ч.л.' },
             { name: 'Экстракт фундука', amount: '0.5 ч.л.' },
             { name: 'Экстракт грецкого ореха', amount: '0.5 ч.л.' }
+        ];
+    } else if (type === 'filling') {
+        ingredientsData = [
+            { name: 'Клубничное конфи', amount: '100г' },
+            { name: 'Вишневое конфи', amount: '100г' },
+            { name: 'Малиновое конфи', amount: '100г' },
+            { name: 'Абрикосовое конфи', amount: '100г' },
+            { name: 'Апельсиновый мармелад', amount: '100г' }
         ];
     }
     
@@ -800,5 +906,8 @@ function showIngredientsModal(type, itemName) {
 
 // Закрыть модальное окно с ингредиентами
 function closeIngredientsModal() {
-    document.getElementById('ingredientsModal').style.display = 'none';
+    const modal = document.getElementById('ingredientsModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
 }
