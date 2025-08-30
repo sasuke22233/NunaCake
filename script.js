@@ -15,7 +15,12 @@ let currentIngredients = [];
 document.addEventListener('DOMContentLoaded', function() {
     setupSmoothScrolling();
     setupEventListeners();
-    initializeConstructor();
+    
+    // Инициализируем конструктор только если он есть на странице
+    if (document.querySelector('.cake-constructor')) {
+        initializeConstructor();
+    }
+    
     setupMobileMenu();
 });
 
@@ -87,21 +92,24 @@ function setupEventListeners() {
         }
     });
 
-    // Обработчик для закрытия модального окна выбора ингредиентов
-    window.addEventListener('click', function(event) {
-        const modal = document.getElementById('ingredientModal');
-        if (event.target === modal) {
-            closeIngredientModal();
-        }
-    });
+    // Обработчики для модальных окон конструктора (только если конструктор есть на странице)
+    if (document.querySelector('.cake-constructor')) {
+        // Обработчик для закрытия модального окна выбора ингредиентов
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('ingredientModal');
+            if (event.target === modal) {
+                closeIngredientModal();
+            }
+        });
     
-    // Обработчик для закрытия модального окна с ингредиентами
-    window.addEventListener('click', function(event) {
-        const modal = document.getElementById('ingredientsModal');
-        if (event.target === modal) {
-            closeIngredientsModal();
-        }
-    });
+        // Обработчик для закрытия модального окна с ингредиентами
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('ingredientsModal');
+            if (event.target === modal) {
+                closeIngredientsModal();
+            }
+        });
+    }
 
     // Обработчики для навигации
     document.querySelectorAll('.nav-link').forEach(link => {
