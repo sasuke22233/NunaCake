@@ -214,16 +214,36 @@
                  </div>
              </div>
 
-            <!-- Модальное окно выбора ингредиентов -->
-            <div class="ingredient-modal" id="ingredientModal">
-                <div class="modal-content">
-                    <span class="close" onclick="closeIngredientModal()">&times;</span>
-                    <h3 id="modalTitle">Выберите ингредиент</h3>
-                    <div class="ingredient-grid" id="ingredientGrid">
-                        <!-- Сетка ингредиентов будет добавлена динамически -->
-                    </div>
+                             <!-- Модальное окно выбора ингредиентов -->
+    <div class="ingredient-modal" id="ingredientModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeIngredientModal()">&times;</span>
+            <h3 id="modalTitle">Выберите ингредиент</h3>
+            <div class="ingredient-slider">
+                <button class="slider-nav prev" onclick="changeSlide(-1)">‹</button>
+                <button class="slider-nav next" onclick="changeSlide(1)">›</button>
+                <div class="slider-container" id="sliderContainer">
+                    <!-- Слайды ингредиентов будут добавлены динамически -->
+                </div>
+                <div class="slider-dots" id="sliderDots">
+                    <!-- Точки навигации будут добавлены динамически -->
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно с ингредиентами -->
+    <div class="ingredients-modal" id="ingredientsModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeIngredientsModal()">&times;</span>
+            <h3 id="ingredientsModalTitle">Ингредиенты</h3>
+            <div class="ingredients-content">
+                <ul id="ingredientsModalList">
+                    <!-- Список ингредиентов будет добавлен динамически -->
+                </ul>
+            </div>
+        </div>
+    </div>
         </div>
     </section>
 
