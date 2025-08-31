@@ -8,11 +8,17 @@ let selectedCreams = [];
 let selectedFillings = []; // Массив начинок для каждого слоя
 let currentModalType = '';
 let currentModalIndex = 0;
-let currentSlideIndex = 0;
+
 let currentIngredients = [];
 
 // Инициализация приложения
 document.addEventListener('DOMContentLoaded', function() {
+    // Инициализация глобальных переменных
+    selectedLayers = new Array(layerCount).fill(null);
+    selectedCreams = new Array(layerCount - 1).fill(null);
+    selectedFillings = new Array(layerCount).fill('none'); // По умолчанию "без начинки"
+    updateLayerCountDisplay();
+    
     setupMobileMenu();
     setupEventListeners();
     loadPopularCakes();
@@ -61,21 +67,7 @@ function loadPopularCakes() {
     setupEventListeners();
 }
 
-// Настройка плавной прокрутки
-function setupSmoothScrolling() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-}
+
 
 // Настройка мобильного меню
 function setupMobileMenu() {
@@ -162,13 +154,7 @@ function setupEventListeners() {
     });
 }
 
-// Инициализация конструктора
-function initializeConstructor() {
-    selectedLayers = new Array(layerCount).fill(null);
-    selectedCreams = new Array(layerCount - 1).fill(null);
-    selectedFillings = new Array(layerCount).fill(null);
-    updateLayerCountDisplay();
-}
+
 
 // Изменение количества коржей
 function changeLayers(delta) {
@@ -177,7 +163,7 @@ function changeLayers(delta) {
         layerCount = newCount;
         selectedLayers = new Array(layerCount).fill(null);
         selectedCreams = new Array(layerCount - 1).fill(null);
-        selectedFillings = new Array(layerCount).fill(null);
+        selectedFillings = new Array(layerCount).fill('none'); // По умолчанию "без начинки"
         updateLayerCountDisplay();
         
         // Скрываем кнопку рецепта и нижнюю секцию при изменении количества слоев
@@ -211,14 +197,20 @@ function startConstructor() {
         settings.style.display = 'none';
         main.style.display = 'block';
         
-        // Скрываем кнопку рецепта и нижнюю секцию при запуске
-        const recipeButtonContainer = document.getElementById('recipeButtonContainer');
-        const bottomSection = document.getElementById('bottomSection');
-        if (recipeButtonContainer) recipeButtonContainer.style.display = 'none';
-        if (bottomSection) bottomSection.style.display = 'none';
-        
+        // Обновляем эскиз и панель состава
         updateCakeSketch();
         updateCompositionPanel();
+        
+        // Проверяем, завершен ли торт (для предзаполненных тортов)
+        // Не скрываем кнопку рецепта, если торт уже завершен
+        const recipeButtonContainer = document.getElementById('recipeButtonContainer');
+        const bottomSection = document.getElementById('bottomSection');
+        
+        if (recipeButtonContainer && recipeButtonContainer.style.display === 'block') {
+            // Кнопка рецепта уже показана - торт предзаполнен и завершен
+        } else {
+            checkCakeCompletion();
+        }
         
         // Плавно прокручиваем к конструктору
         setTimeout(() => {
@@ -307,14 +299,12 @@ function updateCakeSketch() {
 function showIngredientModal(type, index) {
     currentModalType = type;
     currentModalIndex = index;
-    currentSlideIndex = 0;
     
     const modal = document.getElementById('ingredientModal');
     const title = document.getElementById('modalTitle');
-    const sliderContainer = document.getElementById('sliderContainer');
-    const sliderDots = document.getElementById('sliderDots');
+    const ingredientGrid = document.getElementById('ingredientGrid');
     
-    if (!modal || !title || !sliderContainer || !sliderDots) return;
+    if (!modal || !title || !ingredientGrid) return;
     
     // Устанавливаем заголовок в зависимости от типа
     if (type === 'layer') {
@@ -334,113 +324,84 @@ function showIngredientModal(type, index) {
         currentIngredients = fillings;
     }
     
-    // Отладочная информация
-    console.log(`Открыт слайдер для ${type}, количество элементов: ${currentIngredients.length}`);
-    
     // Проверяем данные
     if (!currentIngredients || currentIngredients.length === 0) {
-        console.error('Нет данных для слайдера:', type);
+        console.error('Нет данных для выбора:', type);
         return;
     }
     
-    // Очищаем слайдер
-    sliderContainer.innerHTML = '';
-    sliderDots.innerHTML = '';
+    // Очищаем сетку
+    ingredientGrid.innerHTML = '';
     
-    // Создаем слайды с оптимизированной загрузкой
+    // Создаем элементы ингредиентов
     const fragment = document.createDocumentFragment();
-    const dotsFragment = document.createDocumentFragment();
     
-    currentIngredients.forEach((ingredient, i) => {
-        const slide = document.createElement('div');
-        slide.className = 'slider-item';
+    currentIngredients.forEach((ingredient) => {
+        const item = document.createElement('div');
+        item.className = 'ingredient-item';
         
-        slide.innerHTML = `
+        // Проверяем, является ли этот ингредиент текущим выбором
+        let isSelected = false;
+        if (type === 'layer') {
+            isSelected = selectedLayers[currentModalIndex] === ingredient.id;
+        } else if (type === 'cream') {
+            isSelected = selectedCreams[currentModalIndex] === ingredient.id;
+        } else if (type === 'filling') {
+            isSelected = selectedFillings[currentModalIndex] === ingredient.id;
+        }
+        
+        if (isSelected) {
+            item.classList.add('selected');
+        }
+        
+        item.innerHTML = `
             <img src="${ingredient.image}" alt="${ingredient.name}" loading="lazy">
             <div class="item-name">${ingredient.name}</div>
             <div class="item-description">${ingredient.description}</div>
-            <button class="ingredients-btn" onclick="showIngredientsModal('${type}', '${ingredient.name}')">
+            <button class="ingredients-btn">
                 <i class="fas fa-list"></i> Ингредиенты
             </button>
-            <button class="select-btn">Выбрать ${type === 'layer' ? 'корж' : type === 'cream' ? 'крем' : 'начинку'}</button>
+            <button class="select-btn">${isSelected ? 'Выбрано' : `Выбрать ${type === 'layer' ? 'корж' : type === 'cream' ? 'крем' : 'начинку'}`}</button>
         `;
         
         // Добавляем обработчик клика для кнопки выбора
-        const selectBtn = slide.querySelector('.select-btn');
+        const selectBtn = item.querySelector('.select-btn');
         selectBtn.onclick = (e) => {
             e.stopPropagation();
             selectIngredient(ingredient);
         };
         
-        fragment.appendChild(slide);
+        // Добавляем обработчик клика для кнопки ингредиентов
+        const ingredientsBtn = item.querySelector('.ingredients-btn');
+        ingredientsBtn.onclick = (e) => {
+            e.stopPropagation();
+            showIngredientsModal(type, ingredient.name);
+        };
         
-        // Создаем точку навигации
-        const dot = document.createElement('div');
-        dot.className = 'slider-dot';
-        if (i === 0) dot.classList.add('active');
-        dot.onclick = () => goToSlide(i);
-        dotsFragment.appendChild(dot);
+        fragment.appendChild(item);
     });
     
-    sliderContainer.appendChild(fragment);
-    sliderDots.appendChild(dotsFragment);
+    ingredientGrid.appendChild(fragment);
     
-    // Проверяем созданные элементы
-    const createdSlides = sliderContainer.querySelectorAll('.slider-item');
-    const createdDots = sliderDots.querySelectorAll('.slider-dot');
-    console.log(`Создано слайдов: ${createdSlides.length}, точек: ${createdDots.length}`);
+    // Добавляем поддержку горизонтальной прокрутки курсором
+    addHorizontalScrollSupport(ingredientGrid);
     
-    // Проверяем видимость слайдов
-    createdSlides.forEach((slide, index) => {
-        const rect = slide.getBoundingClientRect();
-        console.log(`Слайд ${index}: ширина=${slide.offsetWidth}, высота=${slide.offsetHeight}, видим=${rect.width > 0 && rect.height > 0}`);
-    });
+    // Показываем модальное окно
+    modal.style.display = 'block';
     
-    // Обновляем навигацию
-    updateSliderNavigation();
-    
-    // Добавляем поддержку свайпов для мобильных устройств
-    addSwipeSupport();
-    
-    // Добавляем поддержку drag для горизонтальной прокрутки
-    addDragSupport();
-    
-    // Добавляем индикатор текущего слайда
-    addSliderCounter();
-    
-    // Принудительно обновляем отображение
-    setTimeout(() => {
-        // Дополнительная проверка
-        const slides = sliderContainer.querySelectorAll('.slider-item');
-        const dots = sliderDots.querySelectorAll('.slider-dot');
-        console.log(`Финальная проверка: ${slides.length} слайдов, ${dots.length} точек`);
-        console.log('Первый слайд видим:', slides[0] ? slides[0].offsetWidth > 0 : false);
-        
-        // Принудительно обновляем после загрузки изображений
-        const images = sliderContainer.querySelectorAll('img');
+    // Оптимизация загрузки изображений
+    const images = ingredientGrid.querySelectorAll('img');
         let loadedImages = 0;
+    
         images.forEach(img => {
             if (img.complete) {
                 loadedImages++;
             } else {
-                img.onload = () => {
+            img.addEventListener('load', () => {
                     loadedImages++;
-                    if (loadedImages === images.length) {
-                        console.log('Все изображения загружены');
-                    }
-                };
-            }
-        });
-        if (loadedImages === images.length) {
-            console.log('Все изображения уже загружены');
+            });
         }
-        
-        // Показываем информацию о слайдере
-        console.log('Слайдер готов к использованию');
-        console.log('Используйте горизонтальную прокрутку для навигации');
-    }, 100);
-    
-    modal.style.display = 'block';
+    });
 }
 
 // Выбор ингредиента
@@ -536,11 +497,31 @@ function checkCakeCompletion() {
     const allCreamsSelected = selectedCreams.every(cream => cream !== null);
     const allFillingsSelected = selectedFillings.slice(0, selectedCreams.length).every(filling => filling !== null);
     
+
+    
     if (allLayersSelected && allCreamsSelected && allFillingsSelected) {
-        // Показываем только кнопку рецепта
+        // Показываем кнопку рецепта
         const recipeButtonContainer = document.getElementById('recipeButtonContainer');
         if (recipeButtonContainer) {
             recipeButtonContainer.style.display = 'block';
+        }
+        
+        // Скрываем панель ингредиентов (она появится только после нажатия "Рецепт")
+        const bottomSection = document.getElementById('bottomSection');
+        if (bottomSection) {
+            bottomSection.style.display = 'none';
+        }
+    } else {
+        // Скрываем кнопку рецепта если торт не завершен
+        const recipeButtonContainer = document.getElementById('recipeButtonContainer');
+        if (recipeButtonContainer) {
+            recipeButtonContainer.style.display = 'none';
+        }
+        
+        // Скрываем панель ингредиентов
+        const bottomSection = document.getElementById('bottomSection');
+        if (bottomSection) {
+            bottomSection.style.display = 'none';
         }
     }
 }
@@ -590,19 +571,7 @@ function createIngredientItem(ingredient, type) {
     return item;
 }
 
-// Обновление панели рецепта
-function updateRecipePanel() {
-    const content = document.getElementById('recipeContent');
-    if (!content) return;
-    
-    if (!selectedLayers.some(l => l) && !selectedCreams.some(c => c) && !selectedFillings.some(f => f)) { // Проверяем все слои
-        content.innerHTML = '<p>Выберите коржи, кремы и начинку для получения рецепта</p>';
-        return;
-    }
-    
-    // Показываем сообщение о необходимости нажать кнопку рецепта
-    content.innerHTML = '<p>Нажмите кнопку "Показать рецепт" для получения подробных инструкций</p>';
-}
+
 
 // Генерация рецепта
 function generateRecipe() {
@@ -772,10 +741,10 @@ function prefillConstructor(cakeType, layerCount, diameter) {
         const layerCountElement = document.getElementById('layerCount');
         if (layerCountElement) {
             // Устанавливаем правильное количество слоев
-            while (window.layerCount !== layerCount) {
-                if (window.layerCount < layerCount) {
+            while (layerCount !== parseInt(layerCountElement.textContent)) {
+                if (parseInt(layerCountElement.textContent) < layerCount) {
                     changeLayers(1);
-                } else {
+            } else {
                     changeLayers(-1);
                 }
             }
@@ -800,63 +769,26 @@ function prefillConstructor(cakeType, layerCount, diameter) {
 // Предзаполнить компоненты торта в зависимости от типа
 function prefillCakeComponents(cakeType, targetLayerCount) {
     const cake = cakeData[cakeType];
-    if (!cake) return;
-    
-    // Определяем подходящие слои, кремы и начинки для каждого типа торта
-    const cakeComponents = {
-        chocolate: {
-            layers: ['chocolate', 'chocolate', 'chocolate', 'chocolate', 'chocolate', 'chocolate'],
-            creams: ['chocolate', 'chocolate', 'chocolate', 'chocolate', 'chocolate'],
-            fillings: ['chocolate-ganache', 'chocolate-ganache', 'chocolate-ganache', 'chocolate-ganache', 'chocolate-ganache', 'chocolate-ganache']
-        },
-        vanilla: {
-            layers: ['vanilla', 'vanilla', 'vanilla', 'vanilla', 'vanilla', 'vanilla'],
-            creams: ['vanilla', 'vanilla', 'vanilla', 'vanilla', 'vanilla'],
-            fillings: ['none', 'none', 'none', 'none', 'none', 'none']
-        },
-        'red-velvet': {
-            layers: ['red-velvet', 'red-velvet', 'red-velvet', 'red-velvet', 'red-velvet', 'red-velvet'],
-            creams: ['vanilla', 'vanilla', 'vanilla', 'vanilla', 'vanilla'],
-            fillings: ['strawberry-jam', 'strawberry-jam', 'strawberry-jam', 'strawberry-jam', 'strawberry-jam', 'strawberry-jam']
-        },
-        carrot: {
-            layers: ['carrot', 'carrot', 'carrot', 'carrot', 'carrot', 'carrot'],
-            creams: ['vanilla', 'vanilla', 'vanilla', 'vanilla', 'vanilla'],
-            fillings: ['caramel-sauce', 'caramel-sauce', 'caramel-sauce', 'caramel-sauce', 'caramel-sauce', 'caramel-sauce']
-        },
-        tiramisu: {
-            layers: ['coffee', 'coffee', 'coffee', 'coffee', 'coffee', 'coffee'],
-            creams: ['coffee', 'coffee', 'coffee', 'coffee', 'coffee'],
-            fillings: ['none', 'none', 'none', 'none', 'none', 'none']
-        },
-        cheesecake: {
-            layers: ['vanilla', 'vanilla', 'vanilla', 'vanilla', 'vanilla', 'vanilla'],
-            creams: ['vanilla', 'vanilla', 'vanilla', 'vanilla', 'vanilla'],
-            fillings: ['none', 'none', 'none', 'none', 'none', 'none']
-        }
-    };
-    
-    const components = cakeComponents[cakeType];
-    if (!components) return;
+    if (!cake || !cake.components) return;
     
     // Предзаполняем слои
-    components.layers.forEach((layerId, index) => {
+    cake.components.layers.forEach((layerId, index) => {
         if (index < targetLayerCount) {
-            window.selectedLayers[index] = layerId;
+            selectedLayers[index] = layerId;
         }
     });
     
     // Предзаполняем кремы
-    components.creams.forEach((creamId, index) => {
+    cake.components.creams.forEach((creamId, index) => {
         if (index < targetLayerCount - 1) {
-            window.selectedCreams[index] = creamId;
+            selectedCreams[index] = creamId;
         }
     });
     
     // Предзаполняем начинки
-    components.fillings.forEach((fillingId, index) => {
+    cake.components.fillings.forEach((fillingId, index) => {
         if (index < targetLayerCount) {
-            window.selectedFillings[index] = fillingId;
+            selectedFillings[index] = fillingId;
         }
     });
 }
@@ -877,148 +809,7 @@ function animateOnScroll() {
 // Обработчик прокрутки для анимаций
 window.addEventListener('scroll', animateOnScroll);
 
-// Функции для слайдера
-function changeSlide(direction) {
-    const newIndex = currentSlideIndex + direction;
-    
-    // Зацикливание слайдера
-    if (newIndex < 0) {
-        goToSlide(currentIngredients.length - 1);
-    } else if (newIndex >= currentIngredients.length) {
-        goToSlide(0);
-    } else {
-        goToSlide(newIndex);
-    }
-}
 
-function goToSlide(index) {
-    if (index < 0 || index >= currentIngredients.length) return;
-    
-    currentSlideIndex = index;
-    const container = document.getElementById('sliderContainer');
-    const dots = document.querySelectorAll('.slider-dot');
-    
-    if (!container) return;
-    
-    // Перемещаем слайдер (каждый слайд занимает 100% ширины)
-    const translateX = -index * 100;
-    container.style.transform = `translateX(${translateX}%)`;
-    
-    // Обновляем активную точку
-    dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === index);
-    });
-    
-    // Обновляем навигацию
-    updateSliderNavigation();
-    
-    // Обновляем счетчик слайдера
-    updateSliderCounter();
-}
-
-function updateSliderNavigation() {
-    const prevBtn = document.querySelector('.slider-nav.prev');
-    const nextBtn = document.querySelector('.slider-nav.next');
-    
-    // Убираем disabled состояние для зацикленного слайдера
-    if (prevBtn) prevBtn.disabled = false;
-    if (nextBtn) nextBtn.disabled = false;
-}
-
-// Добавление поддержки свайпов для мобильных устройств
-function addSwipeSupport() {
-    const slider = document.querySelector('.ingredient-slider');
-    if (!slider) return;
-    
-    let startX = 0;
-    let endX = 0;
-    
-    slider.addEventListener('touchstart', (e) => {
-        startX = e.touches[0].clientX;
-    });
-    
-    slider.addEventListener('touchend', (e) => {
-        endX = e.changedTouches[0].clientX;
-        handleSwipe();
-    });
-    
-    function handleSwipe() {
-        const swipeThreshold = 50;
-        const diff = startX - endX;
-        
-        if (Math.abs(diff) > swipeThreshold) {
-            if (diff > 0) {
-                // Свайп влево - следующий слайд
-                changeSlide(1);
-            } else {
-                // Свайп вправо - предыдущий слайд
-                changeSlide(-1);
-            }
-        }
-    }
-}
-
-// Добавление индикатора текущего слайда
-function addSliderCounter() {
-    const slider = document.querySelector('.ingredient-slider');
-    if (!slider) return;
-    
-    // Удаляем существующий счетчик, если есть
-    const existingCounter = slider.querySelector('.slider-counter');
-    if (existingCounter) {
-        existingCounter.remove();
-    }
-    
-    // Создаем новый счетчик
-    const counter = document.createElement('div');
-    counter.className = 'slider-counter';
-    counter.textContent = `${currentSlideIndex + 1} из ${currentIngredients.length}`;
-    
-    slider.appendChild(counter);
-}
-
-// Добавление поддержки drag для горизонтальной прокрутки
-function addDragSupport() {
-    const sliderContainer = document.getElementById('sliderContainer');
-    if (!sliderContainer) return;
-    
-    let isDragging = false;
-    let startX = 0;
-    let scrollLeft = 0;
-    
-    sliderContainer.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        sliderContainer.classList.add('dragging');
-        startX = e.pageX - sliderContainer.offsetLeft;
-        scrollLeft = sliderContainer.scrollLeft;
-    });
-    
-    sliderContainer.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        e.preventDefault();
-        const x = e.pageX - sliderContainer.offsetLeft;
-        const walk = (x - startX) * 2; // Скорость прокрутки
-        sliderContainer.scrollLeft = scrollLeft - walk;
-    });
-    
-    sliderContainer.addEventListener('mouseup', () => {
-        isDragging = false;
-        sliderContainer.classList.remove('dragging');
-    });
-    
-    sliderContainer.addEventListener('mouseleave', () => {
-        isDragging = false;
-        sliderContainer.classList.remove('dragging');
-    });
-}
-
-// Обновление счетчика слайдера
-function updateSliderCounter() {
-    const counter = document.querySelector('.slider-counter');
-    if (counter) {
-        counter.textContent = `${currentSlideIndex + 1} из ${currentIngredients.length}`;
-    }
-}
 
 // Показать модальное окно с ингредиентами
 function showIngredientsModal(type, itemName) {
@@ -1026,7 +817,10 @@ function showIngredientsModal(type, itemName) {
     const title = document.getElementById('ingredientsModalTitle');
     const ingredientsList = document.getElementById('ingredientsModalList');
     
-    if (!modal || !title || !ingredientsList) return;
+    if (!modal || !title || !ingredientsList) {
+        console.error('Не удалось найти необходимые элементы модального окна');
+        return;
+    }
     
     title.textContent = `Ингредиенты для ${itemName}`;
     
@@ -1036,49 +830,42 @@ function showIngredientsModal(type, itemName) {
     // Получаем данные об ингредиентах в зависимости от типа
     let ingredientsData = [];
     if (type === 'layer') {
-        ingredientsData = [
-            { name: 'Мука пшеничная высшего сорта', amount: '200г' },
-            { name: 'Сахар-песок', amount: '150г' },
-            { name: 'Яйца куриные категории А', amount: '3 шт' },
-            { name: 'Сливочное масло 82.5%', amount: '100г' },
-            { name: 'Молоко 3.2%', amount: '200мл' },
-            { name: 'Разрыхлитель теста', amount: '1 ч.л.' },
-            { name: 'Соль', amount: '0.5 ч.л.' },
-            { name: 'Ванильный экстракт', amount: '1 ч.л.' },
-            { name: 'Экстракт миндаля', amount: '0.5 ч.л.' },
-            { name: 'Корица молотая', amount: '0.25 ч.л.' },
-            { name: 'Мускатный орех', amount: 'щепотка' },
-            { name: 'Кардамон молотый', amount: '0.25 ч.л.' },
-            { name: 'Имбирь молотый', amount: '0.25 ч.л.' },
-            { name: 'Цедра лимона', amount: '1 ч.л.' },
-            { name: 'Цедра апельсина', amount: '1 ч.л.' }
-        ];
+        // Для коржей ищем конкретный корж по имени
+        const layer = layers.find(l => l.name === itemName);
+        if (layer && layer.ingredients) {
+            // Преобразуем массив ингредиентов в нужный формат
+            ingredientsData = layer.ingredients.map(ingredient => ({
+                name: ingredient.charAt(0).toUpperCase() + ingredient.slice(1), // Первая буква заглавная
+                amount: getLayerIngredientAmount(ingredient, layer.id)
+            }));
+        }
     } else if (type === 'cream') {
-        ingredientsData = [
-            { name: 'Сливочное масло 82.5%', amount: '200г' },
-            { name: 'Сахарная пудра', amount: '150г' },
-            { name: 'Сливки 33-35%', amount: '100мл' },
-            { name: 'Молоко цельное', amount: '50мл' },
-            { name: 'Ванильный экстракт', amount: '1 ч.л.' },
-            { name: 'Соль', amount: 'щепотка' },
-            { name: 'Лимонный сок', amount: '1 ч.л.' },
-            { name: 'Экстракт розы', amount: '0.5 ч.л.' },
-            { name: 'Экстракт лаванды', amount: '0.25 ч.л.' },
-            { name: 'Экстракт мяты', amount: '0.25 ч.л.' },
-            { name: 'Экстракт апельсина', amount: '0.5 ч.л.' },
-            { name: 'Экстракт кокоса', amount: '0.5 ч.л.' },
-            { name: 'Экстракт миндаля', amount: '0.5 ч.л.' },
-            { name: 'Экстракт фундука', amount: '0.5 ч.л.' },
-            { name: 'Экстракт грецкого ореха', amount: '0.5 ч.л.' }
-        ];
+        // Для кремов ищем конкретный крем по имени
+        const cream = creams.find(c => c.name === itemName);
+        if (cream && cream.ingredients) {
+            // Преобразуем массив ингредиентов в нужный формат
+            ingredientsData = cream.ingredients.map(ingredient => ({
+                name: ingredient.charAt(0).toUpperCase() + ingredient.slice(1), // Первая буква заглавная
+                amount: getCreamIngredientAmount(ingredient, cream.id)
+            }));
+        }
     } else if (type === 'filling') {
-        ingredientsData = [
-            { name: 'Клубничное конфи', amount: '100г' },
-            { name: 'Вишневое конфи', amount: '100г' },
-            { name: 'Малиновое конфи', amount: '100г' },
-            { name: 'Абрикосовое конфи', amount: '100г' },
-            { name: 'Апельсиновый мармелад', amount: '100г' }
-        ];
+        // Для начинок ищем конкретную начинку по имени
+        const filling = fillings.find(f => f.name === itemName);
+        if (filling && filling.ingredients) {
+            if (filling.id === 'none') {
+                // Для "Без начинки" показываем специальное сообщение
+                ingredientsData = [
+                    { name: 'Дополнительные ингредиенты не требуются', amount: '-' }
+                ];
+            } else {
+                // Преобразуем массив ингредиентов в нужный формат
+                ingredientsData = filling.ingredients.map(ingredient => ({
+                    name: ingredient.charAt(0).toUpperCase() + ingredient.slice(1), // Первая буква заглавная
+                    amount: getIngredientAmount(ingredient, filling.id)
+                }));
+            }
+        }
     }
     
     // Добавляем ингредиенты
@@ -1091,7 +878,271 @@ function showIngredientsModal(type, itemName) {
         ingredientsList.appendChild(li);
     });
     
+    // Показываем модальное окно
     modal.style.display = 'block';
+}
+
+// Функция для получения количества ингредиента в зависимости от типа начинки
+function getIngredientAmount(ingredient, fillingId) {
+    const amounts = {
+        'strawberry-jam': {
+            'клубника': '500г',
+            'сахар': '300г',
+            'лимонный сок': '2 ст.л.',
+            'пектин': '1 ч.л.'
+        },
+        'cherry-jam': {
+            'вишня': '500г',
+            'сахар': '300г',
+            'лимонный сок': '2 ст.л.',
+            'корица': '0.5 ч.л.'
+        },
+        'raspberry-jam': {
+            'малина': '500г',
+            'сахар': '300г',
+            'лимонный сок': '2 ст.л.',
+            'пектин': '1 ч.л.'
+        },
+        'apricot-jam': {
+            'абрикосы': '500г',
+            'сахар': '300г',
+            'лимонный сок': '2 ст.л.',
+            'ваниль': '1 ч.л.'
+        },
+        'orange-marmalade': {
+            'апельсины': '4 шт',
+            'сахар': '400г',
+            'лимонный сок': '2 ст.л.',
+            'цедра': '2 ст.л.'
+        },
+        'chocolate-ganache': {
+            'темный шоколад': '200г',
+            'сливки': '200мл',
+            'сливочное масло': '50г'
+        },
+        'caramel-sauce': {
+            'сахар': '200г',
+            'сливки': '200мл',
+            'сливочное масло': '100г',
+            'соль': '0.5 ч.л.'
+        },
+        'lemon-curd': {
+            'лимонный сок': '100мл',
+            'цедра лимона': '2 ст.л.',
+            'яйца': '3 шт',
+            'сахар': '150г',
+            'сливочное масло': '100г'
+        },
+        'blueberry-compote': {
+            'черника': '400г',
+            'сахар': '200г',
+            'лимонный сок': '1 ст.л.',
+            'корица': '0.5 ч.л.'
+        },
+        'apple-cinnamon': {
+            'яблоки': '4 шт',
+            'сахар': '150г',
+            'корица': '1 ч.л.',
+            'мускатный орех': '0.25 ч.л.',
+            'лимонный сок': '1 ст.л.'
+        }
+    };
+    
+    return amounts[fillingId]?.[ingredient] || 'по вкусу';
+}
+
+// Функция для получения количества ингредиента в зависимости от типа крема
+function getCreamIngredientAmount(ingredient, creamId) {
+    const amounts = {
+        'chocolate': {
+            'темный шоколад': '200г',
+            'сливочное масло': '200г',
+            'сахарная пудра': '150г',
+            'сливки': '100мл'
+        },
+        'vanilla': {
+            'сливочное масло': '200г',
+            'сахарная пудра': '150г',
+            'ванильный экстракт': '2 ч.л.',
+            'молоко': '50мл'
+        },
+        'strawberry': {
+            'клубничное пюре': '200г',
+            'сливочное масло': '200г',
+            'сахарная пудра': '150г',
+            'лимонный сок': '1 ст.л.'
+        },
+        'coffee': {
+            'крепкий кофе': '100мл',
+            'сливочное масло': '200г',
+            'сахарная пудра': '150г',
+            'кофейный ликер': '2 ст.л.'
+        },
+        'cherry': {
+            'вишневое пюре': '200г',
+            'сливочное масло': '200г',
+            'сахарная пудра': '150г',
+            'лимонный сок': '1 ст.л.'
+        },
+        'lemon': {
+            'лимонный сок': '100мл',
+            'цедра лимона': '2 ст.л.',
+            'сливочное масло': '200г',
+            'сахарная пудра': '150г'
+        },
+        'raspberry': {
+            'малиновое пюре': '200г',
+            'сливочное масло': '200г',
+            'сахарная пудра': '150г',
+            'лимонный сок': '1 ст.л.'
+        },
+        'caramel': {
+            'карамельный соус': '150мл',
+            'сливочное масло': '200г',
+            'сахарная пудра': '100г',
+            'соль': '0.5 ч.л.'
+        },
+        'mint': {
+            'мятный экстракт': '2 ч.л.',
+            'сливочное масло': '200г',
+            'сахарная пудра': '150г',
+            'зеленый краситель': '2-3 капли'
+        },
+        'hazelnut': {
+            'фундучная паста': '100г',
+            'сливочное масло': '200г',
+            'сахарная пудра': '150г',
+            'ваниль': '1 ч.л.'
+        },
+        'coconut': {
+            'кокосовое молоко': '100мл',
+            'сливочное масло': '200г',
+            'сахарная пудра': '150г',
+            'кокосовая стружка': '50г'
+        },
+        'orange': {
+            'апельсиновый сок': '100мл',
+            'цедра апельсина': '2 ст.л.',
+            'сливочное масло': '200г',
+            'сахарная пудра': '150г'
+        },
+        'blueberry': {
+            'черничное пюре': '200г',
+            'сливочное масло': '200г',
+            'сахарная пудра': '150г',
+            'лимонный сок': '1 ст.л.'
+        },
+        'pistachio': {
+            'фисташковая паста': '100г',
+            'сливочное масло': '200г',
+            'сахарная пудра': '150г',
+            'ваниль': '1 ч.л.'
+        }
+    };
+    
+    return amounts[creamId]?.[ingredient] || 'по вкусу';
+}
+
+// Функция для получения количества ингредиента в зависимости от типа коржа
+function getLayerIngredientAmount(ingredient, layerId) {
+    const amounts = {
+        'chocolate': {
+            'мука': '200г',
+            'какао': '50г',
+            'яйца': '3 шт',
+            'сахар': '150г',
+            'молоко': '200мл',
+            'масло': '100г'
+        },
+        'vanilla': {
+            'мука': '200г',
+            'яйца': '3 шт',
+            'сахар': '150г',
+            'молоко': '200мл',
+            'масло': '100г',
+            'ваниль': '1 ч.л.'
+        },
+        'red-velvet': {
+            'мука': '200г',
+            'какао': '30г',
+            'яйца': '3 шт',
+            'пахта': '200мл',
+            'масло': '100г',
+            'краситель': '2 ч.л.'
+        },
+        'carrot': {
+            'мука': '200г',
+            'морковь': '200г',
+            'яйца': '3 шт',
+            'сахар': '150г',
+            'масло': '100г',
+            'специи': '1 ч.л.'
+        },
+        'almond': {
+            'миндальная мука': '200г',
+            'яйца': '3 шт',
+            'сахар': '150г',
+            'масло': '100г',
+            'миндаль': '50г'
+        },
+        'coconut': {
+            'мука': '200г',
+            'кокосовая стружка': '100г',
+            'яйца': '3 шт',
+            'сахар': '150г',
+            'кокосовое молоко': '200мл'
+        },
+        'lemon': {
+            'мука': '200г',
+            'яйца': '3 шт',
+            'сахар': '150г',
+            'лимонный сок': '100мл',
+            'цедра лимона': '2 ст.л.',
+            'масло': '100г'
+        },
+        'coffee': {
+            'мука': '200г',
+            'яйца': '3 шт',
+            'сахар': '150г',
+            'крепкий кофе': '200мл',
+            'масло': '100г',
+            'какао': '30г'
+        },
+        'banana': {
+            'мука': '200г',
+            'бананы': '3 шт',
+            'яйца': '3 шт',
+            'сахар': '150г',
+            'масло': '100г',
+            'корица': '1 ч.л.'
+        },
+        'apple': {
+            'мука': '200г',
+            'яблоки': '2 шт',
+            'яйца': '3 шт',
+            'сахар': '150г',
+            'масло': '100г',
+            'корица': '1 ч.л.'
+        },
+        'hazelnut': {
+            'мука': '200г',
+            'фундук': '100г',
+            'яйца': '3 шт',
+            'сахар': '150г',
+            'масло': '100г',
+            'ваниль': '1 ч.л.'
+        },
+        'orange': {
+            'мука': '200г',
+            'апельсины': '2 шт',
+            'яйца': '3 шт',
+            'сахар': '150г',
+            'масло': '100г',
+            'цедра': '2 ст.л.'
+        }
+    };
+    
+    return amounts[layerId]?.[ingredient] || 'по вкусу';
 }
 
 // Закрыть модальное окно с ингредиентами
@@ -1100,4 +1151,42 @@ function closeIngredientsModal() {
     if (modal) {
         modal.style.display = 'none';
     }
+}
+
+// Добавить поддержку горизонтальной прокрутки курсором
+function addHorizontalScrollSupport(container) {
+    let isScrolling = false;
+    let startX, startScrollLeft;
+    
+    container.addEventListener('mousedown', (e) => {
+        isScrolling = true;
+        startX = e.pageX - container.offsetLeft;
+        startScrollLeft = container.scrollLeft;
+        container.style.cursor = 'grabbing';
+        e.preventDefault();
+    });
+    
+    container.addEventListener('mousemove', (e) => {
+        if (!isScrolling) return;
+        
+        const x = e.pageX - container.offsetLeft;
+        const walk = (x - startX) * 2;
+        container.scrollLeft = startScrollLeft - walk;
+    });
+    
+    container.addEventListener('mouseup', () => {
+        isScrolling = false;
+        container.style.cursor = 'grab';
+    });
+    
+    container.addEventListener('mouseleave', () => {
+        isScrolling = false;
+        container.style.cursor = 'grab';
+    });
+    
+    // Поддержка прокрутки колесиком мыши
+    container.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        container.scrollLeft += e.deltaY;
+    });
 }

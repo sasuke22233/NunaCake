@@ -3,6 +3,8 @@
     --primary-pink: #FFE5F1;
     --secondary-pink: #FFB6D9;
     --accent-pink: #FF69B4;
+    --accent-green: #28A745;
+    --light-pink: #FFF0F5;
     --mint: #E8F5E8;
     --light-mint: #F0FFF0;
     --white: #FFFFFF;
@@ -1125,6 +1127,8 @@ body {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    align-items: center;
+    text-align: center;
 }
 
 .recipe-image {
@@ -1221,6 +1225,91 @@ body {
     backdrop-filter: blur(5px);
 }
 
+.ingredient-modal .modal-content {
+    background-color: var(--white);
+    margin: 5% auto;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    width: 90%;
+    max-width: 800px;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: var(--shadow-hover);
+}
+
+.ingredient-modal .close {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: var(--text-light);
+    transition: var(--transition);
+}
+
+.ingredient-modal .close:hover {
+    color: var(--text-dark);
+}
+
+.ingredient-modal h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--text-dark);
+    text-align: center;
+}
+
+/* Модальное окно с ингредиентами */
+.ingredients-modal {
+    display: none;
+    position: fixed;
+    z-index: 3000; /* Выше, чем ingredient-modal */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+}
+
+.ingredients-modal .modal-content {
+    background-color: var(--white);
+    margin: 5% auto;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: var(--shadow-hover);
+}
+
+.ingredients-modal .close {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: var(--text-light);
+    transition: var(--transition);
+}
+
+.ingredients-modal .close:hover {
+    color: var(--text-dark);
+}
+
+.ingredients-modal h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--text-dark);
+    text-align: center;
+}
+
 .ingredients-content {
     margin-top: 1rem;
 }
@@ -1228,17 +1317,18 @@ body {
 .ingredients-content ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 .ingredients-content li {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.75rem;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
     background: var(--light-gray);
     border-radius: 8px;
-    margin-bottom: 0.5rem;
-    border-left: 3px solid var(--accent-pink);
+    border-left: 4px solid var(--accent-pink);
 }
 
 .ingredient-name {
@@ -1249,6 +1339,141 @@ body {
 .ingredient-amount {
     font-weight: 600;
     color: var(--accent-pink);
+    background: var(--white);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+/* Горизонтальная сетка ингредиентов */
+.ingredient-grid {
+    display: flex;
+    gap: 1.5rem;
+    margin: 2rem 0;
+    max-height: 70vh;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 1rem 0;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.ingredient-grid::-webkit-scrollbar {
+    height: 8px;
+}
+
+.ingredient-grid::-webkit-scrollbar-track {
+    background: var(--light-gray);
+    border-radius: 4px;
+}
+
+.ingredient-grid::-webkit-scrollbar-thumb {
+    background: var(--accent-pink);
+    border-radius: 4px;
+}
+
+.ingredient-grid::-webkit-scrollbar-thumb:hover {
+    background: #e55aa0;
+}
+
+.ingredient-item {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    border: 2px solid transparent;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 280px;
+    flex-shrink: 0;
+    cursor: grab;
+}
+
+.ingredient-item:active {
+    cursor: grabbing;
+}
+
+.ingredient-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--accent-pink);
+}
+
+.ingredient-item img {
+    width: 120px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.item-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.item-description {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+    line-height: 1.4;
+    flex-grow: 1;
+}
+
+.ingredients-btn,
+.select-btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    margin: 0.25rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+    width: 100%;
+    max-width: 200px;
+}
+
+.ingredients-btn {
+    background: var(--light-gray);
+    color: var(--text-dark);
+}
+
+.ingredients-btn:hover {
+    background: var(--accent-pink);
+    color: white;
+}
+
+.select-btn {
+    background: var(--accent-pink);
+    color: white;
+}
+
+.select-btn:hover {
+    background: #e55aa0;
+    transform: translateY(-2px);
+}
+
+.ingredient-item.selected {
+    border: 2px solid var(--primary-pink);
+    background-color: rgba(255, 192, 203, 0.1);
+    transform: scale(1.02);
+}
+
+.ingredient-item.selected .select-btn {
+    background-color: var(--primary-pink);
+    color: white;
 }
 
 /* Анимации */
@@ -1358,13 +1583,13 @@ body {
         max-width: 95%;
     }
     
-    .slider-item {
+    .ingredient-item {
         min-width: 250px;
         width: 250px;
         padding: 1rem;
     }
     
-    .slider-item img {
+    .ingredient-item img {
         width: 80px;
         height: 60px;
     }
@@ -1384,19 +1609,7 @@ body {
         min-width: 90px;
     }
     
-    .slider-nav {
-        width: 35px;
-        height: 35px;
-        font-size: 1rem;
-    }
-    
-    .slider-nav.prev {
-        left: -17px;
-    }
-    
-    .slider-nav.next {
-        right: -17px;
-    }
+
 }
 
 @media (max-width: 480px) {
@@ -1404,13 +1617,13 @@ body {
         font-size: 1.75rem;
     }
     
-    .slider-item {
+    .ingredient-item {
         min-width: 220px;
         width: 220px;
         padding: 0.8rem;
     }
     
-    .slider-item img {
+    .ingredient-item img {
         width: 70px;
         height: 50px;
     }
