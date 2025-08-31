@@ -1650,7 +1650,7 @@ body {
     
     /* Опускаем свечку и анимацию тортика на мобильных устройствах */
     .floating-cake {
-        transform: translateY(30px);
+        transform: translateY(60px);
     }
     
     .cake-candle {
@@ -1773,7 +1773,7 @@ body {
      
      /* Дополнительно опускаем анимацию тортика на очень маленьких экранах */
      .floating-cake {
-         transform: translateY(50px);
+         transform: translateY(80px);
      }
      
      .cake-candle {
