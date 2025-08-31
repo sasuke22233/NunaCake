@@ -11,18 +11,55 @@ let currentModalIndex = 0;
 let currentSlideIndex = 0;
 let currentIngredients = [];
 
-// Инициализация при загрузке страницы
+// Инициализация приложения
 document.addEventListener('DOMContentLoaded', function() {
-    setupSmoothScrolling();
+    setupMobileMenu();
     setupEventListeners();
+    loadPopularCakes();
+    animateOnScroll();
     
-    // Инициализируем конструктор только если он есть на странице
+    // Инициализация конструктора (только если конструктор есть на странице)
     if (document.querySelector('.cake-constructor')) {
-        initializeConstructor();
+        startConstructor();
     }
     
-    setupMobileMenu();
+    // Проверяем, есть ли предзаполненные данные для конструктора
+    checkPrefillData();
 });
+
+// Функция для загрузки популярных тортов из базы данных
+function loadPopularCakes() {
+    const grid = document.getElementById('popularCakesGrid');
+    if (!grid) return;
+    
+    // Добавляем параметр для предотвращения кэширования
+    const cacheBuster = Date.now();
+    
+    popularCakes.forEach(cake => {
+        const card = document.createElement('div');
+        card.className = 'cake-card';
+        card.setAttribute('data-cake', cake.id);
+        
+        card.innerHTML = `
+            <div class="cake-image">
+                <img src="${cake.image}?v=${cacheBuster}" alt="${cake.name}">
+            </div>
+            <div class="cake-info">
+                <h3>${cake.name}</h3>
+                <div class="cake-meta">
+                    <span class="difficulty">${cake.difficulty}</span>
+                    <span class="time">${cake.time}</span>
+                </div>
+                <button class="btn btn-small">Рецепт</button>
+            </div>
+        `;
+        
+        grid.appendChild(card);
+    });
+    
+    // Перенастраиваем обработчики событий для новых карточек
+    setupEventListeners();
+}
 
 // Настройка плавной прокрутки
 function setupSmoothScrolling() {
@@ -57,22 +94,27 @@ function setupMobileMenu() {
 function setupEventListeners() {
     // Обработчики для карточек популярных тортов
     document.querySelectorAll('.cake-card').forEach(card => {
-        card.addEventListener('click', function(e) {
+        // Удаляем существующие обработчики, чтобы избежать дублирования
+        card.removeEventListener('click', card._clickHandler);
+        card._clickHandler = function(e) {
             // Проверяем, что клик не по кнопке
             if (!e.target.classList.contains('btn')) {
                 const cakeType = this.getAttribute('data-cake');
                 showRecipeModal(cakeType);
             }
-        });
+        };
+        card.addEventListener('click', card._clickHandler);
         
         // Обработчик для кнопки рецепта
         const recipeBtn = card.querySelector('.btn');
         if (recipeBtn) {
-            recipeBtn.addEventListener('click', function(e) {
+            recipeBtn.removeEventListener('click', recipeBtn._clickHandler);
+            recipeBtn._clickHandler = function(e) {
                 e.stopPropagation();
                 const cakeType = card.getAttribute('data-cake');
                 showRecipeModal(cakeType);
-            });
+            };
+            recipeBtn.addEventListener('click', recipeBtn._clickHandler);
         }
     });
 
@@ -648,35 +690,175 @@ function showRecipe() {
     }, 100);
 }
 
-// Показать модальное окно с рецептом популярного торта
+// Показать модальное окно с описанием популярного торта
 function showRecipeModal(cakeType) {
     const cake = cakeData[cakeType];
     if (!cake) return;
     
     const modal = document.getElementById('recipeModal');
     const title = document.getElementById('modalTitle');
-    const ingredientsList = document.getElementById('ingredientsList');
-    const instructionsList = document.getElementById('instructionsList');
+    const cakeDescription = document.getElementById('cakeDescription');
     
-    if (!modal || !title || !ingredientsList || !instructionsList) return;
+    if (!modal || !title || !cakeDescription) return;
     
     title.textContent = cake.name;
     
-    ingredientsList.innerHTML = '';
-    cake.ingredients.forEach(ingredient => {
-        const li = document.createElement('li');
-        li.textContent = ingredient;
-        ingredientsList.appendChild(li);
-    });
+    // Добавляем изображение торта в модальное окно, если есть
+    const modalImage = document.getElementById('modalImage');
+    if (modalImage && cake.image) {
+        const cacheBuster = Date.now();
+        modalImage.src = `${cake.image}?v=${cacheBuster}`;
+        modalImage.alt = cake.name;
+        modalImage.style.display = 'block';
+    }
     
-    instructionsList.innerHTML = '';
-    cake.instructions.forEach(instruction => {
-        const li = document.createElement('li');
-        li.textContent = instruction;
-        instructionsList.appendChild(li);
-    });
+    // Показываем описание торта
+    cakeDescription.textContent = cake.description || 'Описание торта будет добавлено позже.';
+    
+    // Настраиваем обработчик для кнопки открытия конструктора
+    const openConstructorBtn = document.getElementById('openConstructorBtn');
+    if (openConstructorBtn) {
+        openConstructorBtn.onclick = () => {
+            openConstructorWithCake(cakeType);
+        };
+    }
     
     modal.style.display = 'block';
+}
+
+// Открыть конструктор с предзаполненными данными для выбранного торта
+function openConstructorWithCake(cakeType) {
+    const cake = cakeData[cakeType];
+    if (!cake) return;
+    
+    // Получаем выбранные значения
+    const layerCount = parseInt(document.getElementById('layerCountSelect').value);
+    const diameter = parseInt(document.getElementById('diameterSelect').value);
+    
+    // Сохраняем данные для передачи в конструктор
+    sessionStorage.setItem('prefillCakeType', cakeType);
+    sessionStorage.setItem('prefillLayerCount', layerCount);
+    sessionStorage.setItem('prefillDiameter', diameter);
+    
+    // Закрываем модальное окно
+    document.getElementById('recipeModal').style.display = 'none';
+    
+    // Переходим на страницу конструктора
+    window.location.href = 'constructor.html';
+}
+
+// Проверить и применить предзаполненные данные для конструктора
+function checkPrefillData() {
+    const prefillCakeType = sessionStorage.getItem('prefillCakeType');
+    const prefillLayerCount = sessionStorage.getItem('prefillLayerCount');
+    const prefillDiameter = sessionStorage.getItem('prefillDiameter');
+    
+    if (prefillCakeType && prefillLayerCount && prefillDiameter) {
+        // Очищаем данные из sessionStorage
+        sessionStorage.removeItem('prefillCakeType');
+        sessionStorage.removeItem('prefillLayerCount');
+        sessionStorage.removeItem('prefillDiameter');
+        
+        // Применяем предзаполненные данные
+        prefillConstructor(prefillCakeType, parseInt(prefillLayerCount), parseInt(prefillDiameter));
+    }
+}
+
+// Предзаполнить конструктор данными для выбранного торта
+function prefillConstructor(cakeType, layerCount, diameter) {
+    // Устанавливаем количество слоев
+    if (layerCount >= 2 && layerCount <= 6) {
+        // Находим и устанавливаем количество слоев в интерфейсе
+        const layerCountElement = document.getElementById('layerCount');
+        if (layerCountElement) {
+            // Устанавливаем правильное количество слоев
+            while (window.layerCount !== layerCount) {
+                if (window.layerCount < layerCount) {
+                    changeLayers(1);
+                } else {
+                    changeLayers(-1);
+                }
+            }
+        }
+    }
+    
+    // Устанавливаем диаметр
+    const diameterSelect = document.getElementById('diameterSelect');
+    if (diameterSelect) {
+        diameterSelect.value = diameter;
+    }
+    
+    // Предзаполняем слои и кремы в зависимости от типа торта
+    prefillCakeComponents(cakeType, layerCount);
+    
+    // Автоматически запускаем конструктор
+    setTimeout(() => {
+        startConstructor();
+    }, 100);
+}
+
+// Предзаполнить компоненты торта в зависимости от типа
+function prefillCakeComponents(cakeType, targetLayerCount) {
+    const cake = cakeData[cakeType];
+    if (!cake) return;
+    
+    // Определяем подходящие слои, кремы и начинки для каждого типа торта
+    const cakeComponents = {
+        chocolate: {
+            layers: ['chocolate', 'chocolate', 'chocolate', 'chocolate', 'chocolate', 'chocolate'],
+            creams: ['chocolate', 'chocolate', 'chocolate', 'chocolate', 'chocolate'],
+            fillings: ['chocolate-ganache', 'chocolate-ganache', 'chocolate-ganache', 'chocolate-ganache', 'chocolate-ganache', 'chocolate-ganache']
+        },
+        vanilla: {
+            layers: ['vanilla', 'vanilla', 'vanilla', 'vanilla', 'vanilla', 'vanilla'],
+            creams: ['vanilla', 'vanilla', 'vanilla', 'vanilla', 'vanilla'],
+            fillings: ['none', 'none', 'none', 'none', 'none', 'none']
+        },
+        'red-velvet': {
+            layers: ['red-velvet', 'red-velvet', 'red-velvet', 'red-velvet', 'red-velvet', 'red-velvet'],
+            creams: ['vanilla', 'vanilla', 'vanilla', 'vanilla', 'vanilla'],
+            fillings: ['strawberry-jam', 'strawberry-jam', 'strawberry-jam', 'strawberry-jam', 'strawberry-jam', 'strawberry-jam']
+        },
+        carrot: {
+            layers: ['carrot', 'carrot', 'carrot', 'carrot', 'carrot', 'carrot'],
+            creams: ['vanilla', 'vanilla', 'vanilla', 'vanilla', 'vanilla'],
+            fillings: ['caramel-sauce', 'caramel-sauce', 'caramel-sauce', 'caramel-sauce', 'caramel-sauce', 'caramel-sauce']
+        },
+        tiramisu: {
+            layers: ['coffee', 'coffee', 'coffee', 'coffee', 'coffee', 'coffee'],
+            creams: ['coffee', 'coffee', 'coffee', 'coffee', 'coffee'],
+            fillings: ['none', 'none', 'none', 'none', 'none', 'none']
+        },
+        cheesecake: {
+            layers: ['vanilla', 'vanilla', 'vanilla', 'vanilla', 'vanilla', 'vanilla'],
+            creams: ['vanilla', 'vanilla', 'vanilla', 'vanilla', 'vanilla'],
+            fillings: ['none', 'none', 'none', 'none', 'none', 'none']
+        }
+    };
+    
+    const components = cakeComponents[cakeType];
+    if (!components) return;
+    
+    // Предзаполняем слои
+    components.layers.forEach((layerId, index) => {
+        if (index < targetLayerCount) {
+            window.selectedLayers[index] = layerId;
+        }
+    });
+    
+    // Предзаполняем кремы
+    components.creams.forEach((creamId, index) => {
+        if (index < targetLayerCount - 1) {
+            window.selectedCreams[index] = creamId;
+        }
+    });
+    
+    // Предзаполняем начинки
+    components.fillings.forEach((fillingId, index) => {
+        if (index < targetLayerCount) {
+            window.selectedFillings[index] = fillingId;
+        }
+    });
 }
 
 // Анимация при прокрутке
