@@ -82,8 +82,8 @@ const cakeData = {
         difficulty: "Сложный",
         time: "120 мин",
         servings: "10-12",
-        image: "",
-        thumbnail: "",
+        image: "https://eda.video/storage/Jmhhyms2ETn8D0RIKZhJUAH8poQBDLnnPZokXug6.jpg?w=400&h=300&fit=crop",
+        thumbnail: "https://eda.video/storage/Jmhhyms2ETn8D0RIKZhJUAH8poQBDLnnPZokXug6.jpg?w=200&h=150&fit=crop",
         description: "Элегантный красный торт с какао и нежным вкусом. Этот американский классический торт известен своим ярким красным цветом и бархатистой текстурой. Сочетание какао-порошка и красного красителя создает уникальный вкус, который невозможно спутать с другими тортами. Традиционно подается с кремом из сливочного сыра. Идеальный выбор для особых случаев и праздников.",
         ingredients: [
             "250г муки высшего сорта",
@@ -121,8 +121,8 @@ const cakeData = {
         difficulty: "Средний",
         time: "100 мин",
         servings: "10-12",
-        image: "",
-        thumbnail: "",
+        image: "https://crazybrothers.ru/wp-content/uploads/Tort-Morkovnyj-1.jpg?w=400&h=300&fit=crop",
+        thumbnail: "https://crazybrothers.ru/wp-content/uploads/Tort-Morkovnyj-1.jpg?w=200&h=150&fit=crop",
         description: "Полезный морковный торт со специями и орехами. Этот торт сочетает в себе сладость и пользу, благодаря свежей моркови и грецким орехам. Теплые специи - корица и мускатный орех - придают ему неповторимый аромат. Идеально подходит для тех, кто ищет более здоровую альтернативу традиционным тортам.",
         ingredients: [
             "250г муки высшего сорта",
@@ -159,8 +159,8 @@ const cakeData = {
         difficulty: "Сложный",
         time: "180 мин",
         servings: "8-10",
-        image: "",
-        thumbnail: "",
+        image: "https://i.ytimg.com/vi/-Zs9kbZToBw/maxresdefault.jpg?w=400&h=300&fit=crop",
+        thumbnail: "https://i.ytimg.com/vi/-Zs9kbZToBw/maxresdefault.jpg?w=200&h=150&fit=crop",
         description: "Итальянский десерт с кофе, маскарпоне и савоярди. Этот элегантный десерт покорил весь мир своим нежным вкусом и изысканным сочетанием кофе и сливочного крема. Тирамису не требует выпекания и готовится из слоев пропитанных кофе савоярди и воздушного крема из маскарпоне. Идеальный выбор для романтического ужина или особого случая.",
         ingredients: [
             "6 яиц",
@@ -194,8 +194,8 @@ const cakeData = {
         difficulty: "Средний",
         time: "150 мин",
         servings: "10-12",
-        image: "",
-        thumbnail: "",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBWdMzyjlhphwC5yFs8oAK1iEJiyGi5pEQQA&s?w=400&h=300&fit=crop",
+        thumbnail: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBWdMzyjlhphwC5yFs8oAK1iEJiyGi5pEQQA&s?w=200&h=150&fit=crop",
         description: "Классический чизкейк с песочной основой и нежным кремом. Этот американский десерт славится своей кремовой текстурой и насыщенным вкусом. Готовится на основе из песочного печенья с нежной начинкой из творожного сыра. Лимонная цедра и сок добавляют свежести и балансируют сладость. Идеально подходит для праздничного стола.",
         ingredients: [
             "200г песочного печенья",
@@ -230,8 +230,8 @@ const cakeData = {
         difficulty: "Сложный",
         time: "180 мин",
         servings: "12-15",
-        image: "",
-        thumbnail: "",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR41kmWuWN-HRfDn37HyZxFseOIX0VK2e9DyQ&s?w=400&h=300&fit=crop",
+        thumbnail: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR41kmWuWN-HRfDn37HyZxFseOIX0VK2e9DyQ&s?w=200&h=150&fit=crop",
         description: "Классический немецкий торт с шоколадными коржами, вишнями и взбитыми сливками. Этот элегантный десерт сочетает в себе насыщенный вкус шоколада, кисло-сладкие вишни и нежные взбитые сливки. Традиционно украшается вишнями и шоколадной стружкой, создавая эффектную презентацию. Идеальный выбор для праздничных торжеств и особых случаев.",
         ingredients: [
             "300г муки",
@@ -265,8 +265,8 @@ const cakeData = {
         difficulty: "Эксперт",
         time: "240 мин",
         servings: "12-15",
-        image: "",
-        thumbnail: "",
+        image: "https://img.iamcook.ru/old/upl/recipes/cat/u-2f1d47e36cfb001cbb6e07c1effab1a8.JPG?w=400&h=300&fit=crop",
+        thumbnail: "https://img.iamcook.ru/old/upl/recipes/cat/u-2f1d47e36cfb001cbb6e07c1effab1a8.JPG?w=200&h=150&fit=crop",
         description: "Изысканный французский торт с миндальными коржами, кофейным кремом и шоколадным ганашем. Этот сложный десерт требует мастерства и терпения, но результат стоит всех усилий. Многослойная структура создает гармоничное сочетание вкусов: нежный миндаль, насыщенный кофе и богатый шоколад. Идеальный выбор для истинных ценителей кондитерского искусства.",
         ingredients: [
             "200г миндальной муки",
@@ -299,8 +299,8 @@ const cakeData = {
         difficulty: "Средний",
         time: "120 мин",
         servings: "8-10",
-        image: "",
-        thumbnail: "",
+        image: "https://img.iamcook.ru/old/upl/recipes/cat/u-4e7a37f2e6e97719ed1262e934531d6f.jpg?w=400&h=300&fit=crop",
+        thumbnail: "https://img.iamcook.ru/old/upl/recipes/cat/u-4e7a37f2e6e97719ed1262e934531d6f.jpg?w=200&h=150&fit=crop",
         description: "Воздушный шоколадный мусс с нежной текстурой и насыщенным вкусом. Этот элегантный десерт готовится без выпекания и покоряет сердца своим легким, но богатым вкусом. Сочетание темного шоколада, взбитых сливок и яиц создает идеальную консистенцию. Идеально подходит для романтических ужинов и изысканных десертов.",
         ingredients: [
             "200г темного шоколада",
@@ -332,8 +332,8 @@ const cakeData = {
         difficulty: "Средний",
         time: "150 мин",
         servings: "8-10",
-        image: "",
-        thumbnail: "",
+        image: "https://i.ytimg.com/vi/t7MgX0Lgqvc/maxresdefault.jpg?w=400&h=300&fit=crop",
+        thumbnail: "https://i.ytimg.com/vi/t7MgX0Lgqvc/maxresdefault.jpg?w=200&h=150&fit=crop",
         description: "Легкий австралийский десерт с хрустящей меренгой, взбитыми сливками и свежими фруктами. Этот элегантный десерт сочетает в себе хрустящую снаружи и мягкую внутри меренгу с нежными взбитыми сливками и яркими свежими фруктами. Идеально подходит для летних праздников и легких десертов. Поражает своим контрастом текстур и свежестью вкуса.",
         ingredients: [
             "4 яичных белка",
@@ -364,8 +364,8 @@ const cakeData = {
         difficulty: "Легкий",
         time: "80 мин",
         servings: "8-10",
-        image: "",
-        thumbnail: "",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5LbtAJSim-U9FvaAilHRA23OjL2YnIstWN09C36PBujo7exG7Qy6Si7Oh0S-0Af3Gr9k&usqp=CAU?w=400&h=300&fit=crop",
+        thumbnail: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5LbtAJSim-U9FvaAilHRA23OjL2YnIstWN09C36PBujo7exG7Qy6Si7Oh0S-0Af3Gr9k&usqp=CAU?w=200&h=150&fit=crop",
         description: "Освежающий лимонный торт с цитрусовой глазурью. Этот классический британский десерт покоряет своим ярким лимонным вкусом и нежной текстурой. Лимонная глазурь добавляет дополнительную порцию цитрусового аромата и создает красивый блестящий вид. Идеально подходит для весенних и летних чаепитий, а также для тех, кто любит освежающие десерты.",
         ingredients: [
             "200г муки",
@@ -398,8 +398,8 @@ const cakeData = {
         difficulty: "Средний",
         time: "100 мин",
         servings: "8-10",
-        image: "",
-        thumbnail: "",
+        image: "https://farm3.staticflickr.com/2950/15469054415_db7b6bd371_c.jpg?w=400&h=300&fit=crop",
+        thumbnail: "https://farm3.staticflickr.com/2950/15469054415_db7b6bd371_c.jpg?w=200&h=150&fit=crop",
         description: "Ароматный кофейно-ореховый торт с насыщенным вкусом кофе и хрустящими грецкими орехами. Этот элегантный десерт сочетает в себе глубокий кофейный аромат с богатым вкусом грецких орехов. Идеально подходит для любителей кофе и ореховых десертов. Традиционно подается с кофе или чаем и является отличным выбором для послеобеденного десерта.",
         ingredients: [
             "200г муки",
@@ -432,8 +432,8 @@ const cakeData = {
         difficulty: "Легкий",
         time: "70 мин",
         servings: "8-10",
-        image: "",
-        thumbnail: "",
+        image: "https://farm3.staticflickr.com/2950/15469054415_db7b6bd371_c.jpg?w=400&h=300&fit=crop",
+        thumbnail: "https://farm3.staticflickr.com/2950/15469054415_db7b6bd371_c.jpg?w=200&h=150&fit=crop",
         description: "Влажный и ароматный банановый хлеб с нежной текстурой. Этот классический американский десерт идеально подходит для использования перезрелых бананов. Сладкий вкус бананов сочетается с теплыми специями, создавая уютный и домашний десерт. Идеально подходит для завтрака, полдника или легкого перекуса. Отличный выбор для начинающих кондитеров.",
         ingredients: [
             "200г муки",
@@ -466,8 +466,8 @@ const cakeData = {
         difficulty: "Средний",
         time: "90 мин",
         servings: "10-12",
-        image: "",
-        thumbnail: "",
+        image: "https://i.ytimg.com/vi/WIB-jHtl6sM/maxresdefault.jpg?w=400&h=300&fit=crop",
+        thumbnail: "https://i.ytimg.com/vi/WIB-jHtl6sM/maxresdefault.jpg?w=200&h=150&fit=crop",
         description: "Ароматный яблочно-коричный торт с кусочками свежих яблок и теплыми специями. Этот уютный осенний десерт сочетает в себе сладость яблок с пряным ароматом корицы. Идеально подходит для осенних и зимних праздников, создавая атмосферу тепла и уюта. Отличный выбор для семейных посиделок и праздничных столов.",
         ingredients: [
             "250г муки высшего сорта",
@@ -524,7 +524,7 @@ const layers = [
     { 
         id: 'red-velvet', 
         name: 'Красный бархат', 
-        image: '', 
+        image: 'https://i.ytimg.com/vi/XDgPtHWBdHQ/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCNMuyC4sMKNFgHBBdDf7Jy4VFIqg?w=80&h=60&fit=crop', 
         description: 'Элегантный красный корж с какао',
         ingredients: ['мука', 'какао', 'яйца', 'пахта', 'масло', 'краситель'],
         bakingTime: '25-30 мин',
@@ -533,7 +533,7 @@ const layers = [
     { 
         id: 'carrot', 
         name: 'Морковный', 
-        image: '', 
+        image: 'https://balthazar.club/uploads/posts/2022-02/1645702852_1-balthazar-club-p-morkovnii-biskvit-1.jpg?w=80&h=60&fit=crop', 
         description: 'Полезный морковный корж со специями',
         ingredients: ['мука', 'морковь', 'яйца', 'сахар', 'масло', 'специи'],
         bakingTime: '30-35 мин',
@@ -542,7 +542,7 @@ const layers = [
     { 
         id: 'almond', 
         name: 'Миндальный', 
-        image: '', 
+        image: 'https://img.iamcook.ru/2018/upl/recipes/cat/u-44618902deb1a7fe453015da8c25fe04.JPG?w=80&h=60&fit=crop', 
         description: 'Ароматный миндальный корж с хрустящей корочкой',
         ingredients: ['миндальная мука', 'яйца', 'сахар', 'масло', 'миндаль'],
         bakingTime: '20-25 мин',
@@ -551,7 +551,7 @@ const layers = [
     { 
         id: 'coconut', 
         name: 'Кокосовый', 
-        image: '', 
+        image: 'https://img.iamcook.ru/2020/upl/recipes/cat/u-7cc7b53bf56924b6d1b145aa6fc7dd58.JPG?w=80&h=60&fit=crop', 
         description: 'Экзотический кокосовый корж с тропическим вкусом',
         ingredients: ['мука', 'кокосовая стружка', 'яйца', 'сахар', 'кокосовое молоко'],
         bakingTime: '25-30 мин',
@@ -560,7 +560,7 @@ const layers = [
     { 
         id: 'lemon', 
         name: 'Лимонный', 
-        image: '', 
+        image: 'https://i.ytimg.com/vi/XZvQlrNVXjA/maxresdefault.jpg?w=80&h=60&fit=crop', 
         description: 'Освежающий лимонный корж с цитрусовым ароматом',
         ingredients: ['мука', 'яйца', 'сахар', 'лимонный сок', 'цедра лимона', 'масло'],
         bakingTime: '20-25 мин',
@@ -569,7 +569,7 @@ const layers = [
     { 
         id: 'coffee', 
         name: 'Кофейный', 
-        image: '', 
+        image: 'https://i.ytimg.com/vi/W7I2u-Gqi_Y/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDMJg4Zp1Lgg1kDurt5K3mn4g7a-A?w=80&h=60&fit=crop', 
         description: 'Ароматный кофейный корж с насыщенным вкусом',
         ingredients: ['мука', 'яйца', 'сахар', 'крепкий кофе', 'масло', 'какао'],
         bakingTime: '25-30 мин',
@@ -578,7 +578,7 @@ const layers = [
     { 
         id: 'banana', 
         name: 'Банановый', 
-        image: '', 
+        image: 'https://img.iamcook.ru/2020/upl/recipes/cat/u-d8e32e2b2e0c4fc54881a8823a45817e.JPG?w=80&h=60&fit=crop', 
         description: 'Влажный банановый корж с нежной текстурой',
         ingredients: ['мука', 'бананы', 'яйца', 'сахар', 'масло', 'корица'],
         bakingTime: '30-35 мин',
@@ -587,7 +587,7 @@ const layers = [
     { 
         id: 'apple', 
         name: 'Яблочный', 
-        image: '', 
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSur44laY3giw8ybAeHqRz_Yqc6dnJ6Ewre7g&s?w=80&h=60&fit=crop', 
         description: 'Ароматный яблочный корж с кусочками фруктов',
         ingredients: ['мука', 'яблоки', 'яйца', 'сахар', 'масло', 'корица'],
         bakingTime: '25-30 мин',
@@ -596,7 +596,7 @@ const layers = [
     { 
         id: 'hazelnut', 
         name: 'Фундучный', 
-        image: '', 
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCoNk07qZF7_iSGOLUX1TWq5GwdHUEyd9dhg&s?w=80&h=60&fit=crop', 
         description: 'Богатый фундучный корж с ореховым вкусом',
         ingredients: ['мука', 'фундук', 'яйца', 'сахар', 'масло', 'ваниль'],
         bakingTime: '25-30 мин',
@@ -605,22 +605,13 @@ const layers = [
     { 
         id: 'orange', 
         name: 'Апельсиновый', 
-        image: '', 
+        image: 'https://i.ytimg.com/vi/rSd6W5vfaN0/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLC-uuFM1dKPeZ6SvchjsB0Bdr4VSA?w=80&h=60&fit=crop', 
         description: 'Солнечный апельсиновый корж с цитрусовым ароматом',
         ingredients: ['мука', 'апельсины', 'яйца', 'сахар', 'масло', 'цедра'],
         bakingTime: '20-25 мин',
         temperature: '175°C'
     }, 
 
-    { 
-        id: 'lemon', 
-        name: 'Лимонный', 
-        image: '', 
-        description: 'Освежающий лимонный корж с цитрусовым ароматом',
-        ingredients: ['мука', 'лимон', 'яйца', 'сахар', 'масло', 'лимонная цедра'],
-        bakingTime: '25-30 мин',
-        temperature: '175°C'
-    },
 ];
 
 // Расширенная база кремов
@@ -646,7 +637,7 @@ const creams = [
     { 
         id: 'strawberry', 
         name: 'Клубничный', 
-        image: '', 
+        image: 'https://mixnews.lv/wp-content/uploads/2025/06/26/1750948983-mixnews-9f9d6d15ec2f7f3e07fc485df412f628.jpg?w=80&h=60&fit=crop', 
         description: 'Свежий клубничный крем с натуральным вкусом',
         ingredients: ['клубничное пюре', 'сливочное масло', 'сахарная пудра', 'лимонный сок'],
         preparationTime: '20 мин',
@@ -655,7 +646,7 @@ const creams = [
     { 
         id: 'coffee', 
         name: 'Кофейный', 
-        image: '', 
+        image: 'https://eda.video/storage/ZuetNPZv2km2XhHNfMCKZEiIQYPjU83EkCaF0Idr.jpg?w=80&h=60&fit=crop', 
         description: 'Ароматный кофейный крем с насыщенным вкусом',
         ingredients: ['крепкий кофе', 'сливочное масло', 'сахарная пудра', 'кофейный ликер'],
         preparationTime: '15 мин',
@@ -664,7 +655,7 @@ const creams = [
     { 
         id: 'cherry', 
         name: 'Вишневый', 
-        image: '', 
+        image: 'https://img.povar.ru/mobile/43/c7/24/55/vishnevii_krem-200679.jpg?w=80&h=60&fit=crop', 
         description: 'Яркий вишневый крем с кисло-сладким вкусом',
         ingredients: ['вишневое пюре', 'сливочное масло', 'сахарная пудра', 'лимонный сок'],
         preparationTime: '20 мин',
@@ -673,7 +664,7 @@ const creams = [
     { 
         id: 'lemon', 
         name: 'Лимонный', 
-        image: '', 
+        image: 'https://cdn.vkuso.ru/uploads/nezhnyj-limonnyj-krem-na-desert.jpg?w=80&h=60&fit=crop', 
         description: 'Освежающий лимонный крем с цитрусовым ароматом',
         ingredients: ['лимонный сок', 'цедра лимона', 'сливочное масло', 'сахарная пудра'],
         preparationTime: '15 мин',
@@ -682,7 +673,7 @@ const creams = [
     { 
         id: 'raspberry', 
         name: 'Малиновый', 
-        image: '', 
+        image: 'https://tortik.club/media/zoo/images/309_2dc769bba650e1e7692b7704e8cbfc74.jpg?w=80&h=60&fit=crop', 
         description: 'Нежный малиновый крем с ягодным вкусом',
         ingredients: ['малиновое пюре', 'сливочное масло', 'сахарная пудра', 'лимонный сок'],
         preparationTime: '20 мин',
@@ -691,7 +682,7 @@ const creams = [
     { 
         id: 'caramel', 
         name: 'Карамельный', 
-        image: '', 
+        image: 'https://i.ytimg.com/vi/9-wFwtgcIIo/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDOHV_Oa-yPCulkjKJVQA-dIdSNtw?w=80&h=60&fit=crop', 
         description: 'Сладкий карамельный крем с золотистым цветом',
         ingredients: ['карамельный соус', 'сливочное масло', 'сахарная пудра', 'соль'],
         preparationTime: '25 мин',
@@ -700,7 +691,7 @@ const creams = [
     { 
         id: 'mint', 
         name: 'Мятный', 
-        image: '', 
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQrQCmrvvfGCjqgYNaGZrwy2HScD2rFsE7Xg&s?w=80&h=60&fit=crop', 
         description: 'Освежающий мятный крем с прохладным вкусом',
         ingredients: ['мятный экстракт', 'сливочное масло', 'сахарная пудра', 'зеленый краситель'],
         preparationTime: '10 мин',
@@ -709,7 +700,7 @@ const creams = [
     { 
         id: 'hazelnut', 
         name: 'Фундучный', 
-        image: '', 
+        image: 'https://i.ytimg.com/vi/gqfuOXLEZ_M/maxresdefault.jpg?w=80&h=60&fit=crop', 
         description: 'Богатый фундучный крем с ореховым вкусом',
         ingredients: ['фундучная паста', 'сливочное масло', 'сахарная пудра', 'ваниль'],
         preparationTime: '15 мин',
@@ -718,7 +709,7 @@ const creams = [
     { 
         id: 'coconut', 
         name: 'Кокосовый', 
-        image: '', 
+        image: 'https://sladkiy-dvor.ru/wp-content/uploads/2021/04/kokosoviy-krem-rafaello-recepti.jpg?w=80&h=60&fit=crop', 
         description: 'Экзотический кокосовый крем с тропическим вкусом',
         ingredients: ['кокосовое молоко', 'сливочное масло', 'сахарная пудра', 'кокосовая стружка'],
         preparationTime: '20 мин',
@@ -727,7 +718,7 @@ const creams = [
     { 
         id: 'orange', 
         name: 'Апельсиновый', 
-        image: '', 
+        image: 'https://i.ytimg.com/vi/GldgRTP3vlg/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAm69BZRd5QEgndMR6gVTNYUdAxMw?w=80&h=60&fit=crop', 
         description: 'Солнечный апельсиновый крем с цитрусовым ароматом',
         ingredients: ['апельсиновый сок', 'цедра апельсина', 'сливочное масло', 'сахарная пудра'],
         preparationTime: '15 мин',
@@ -736,7 +727,7 @@ const creams = [
     { 
         id: 'blueberry', 
         name: 'Черничный', 
-        image: '', 
+        image: 'https://img.povar.ru/mobile/47/14/7c/2c/chernichnii_krem_so_slivochnim_maslom-201071.jpg?w=80&h=60&fit=crop', 
         description: 'Яркий черничный крем с антиоксидантами',
         ingredients: ['черничное пюре', 'сливочное масло', 'сахарная пудра', 'лимонный сок'],
         preparationTime: '20 мин',
@@ -745,7 +736,7 @@ const creams = [
     { 
         id: 'pistachio', 
         name: 'Фисташковый', 
-        image: '', 
+        image: 'https://img.iamcook.ru/2023/upl/recipes/cat/u-b0d0afaee7fcad9b8bc925e53a91804f.JPG?w=80&h=60&fit=crop', 
         description: 'Элегантный фисташковый крем с нежным вкусом',
         ingredients: ['фисташковая паста', 'сливочное масло', 'сахарная пудра', 'ваниль'],
         preparationTime: '15 мин',
@@ -785,7 +776,7 @@ const fillings = [
     { 
         id: 'raspberry-jam', 
         name: 'Малиновое конфи', 
-        image: '', 
+        image: 'https://onetable.ru/wp-content/uploads/2023/03/konfi-malinovoe-foto-1.jpg?w=80&h=60&fit=crop', 
         description: 'Нежное малиновое конфи с ярким вкусом',
         ingredients: ['малина', 'сахар', 'лимонный сок', 'пектин'],
         preparationTime: '40 мин',
@@ -794,7 +785,7 @@ const fillings = [
     { 
         id: 'apricot-jam', 
         name: 'Абрикосовое конфи', 
-        image: '', 
+        image: 'https://onetable.ru/wp-content/uploads/2023/03/konfi-abrikosovoe-foto-1-952x472.jpg?w=80&h=60&fit=crop', 
         description: 'Солнечное абрикосовое конфи с нежным вкусом',
         ingredients: ['абрикосы', 'сахар', 'лимонный сок', 'ваниль'],
         preparationTime: '55 мин',
@@ -803,7 +794,7 @@ const fillings = [
     { 
         id: 'orange-marmalade', 
         name: 'Апельсиновый мармелад', 
-        image: '', 
+        image: 'https://i.ytimg.com/vi/VuiplLlvZ3k/maxresdefault.jpg?w=80&h=60&fit=crop', 
         description: 'Цитрусовый апельсиновый мармелад с горчинкой',
         ingredients: ['апельсины', 'сахар', 'лимонный сок', 'цедра'],
         preparationTime: '60 мин',
@@ -812,7 +803,7 @@ const fillings = [
     { 
         id: 'chocolate-ganache', 
         name: 'Шоколадный ганаш', 
-        image: '', 
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScrVgpQDC1DzMaaoijMhYZ86nszHTXhGJ9oQ&s?w=80&h=60&fit=crop', 
         description: 'Гладкий шоколадный ганаш для начинки',
         ingredients: ['темный шоколад', 'сливки', 'сливочное масло'],
         preparationTime: '15 мин',
@@ -821,7 +812,7 @@ const fillings = [
     { 
         id: 'caramel-sauce', 
         name: 'Карамельный соус', 
-        image: '', 
+        image: 'https://alimero.ru/uploads/images/20/36/19/2019/12/14/c2b741.jpg?w=80&h=60&fit=crop', 
         description: 'Сладкий карамельный соус с золотистым цветом',
         ingredients: ['сахар', 'сливки', 'сливочное масло', 'соль'],
         preparationTime: '20 мин',
@@ -830,7 +821,7 @@ const fillings = [
     { 
         id: 'lemon-curd', 
         name: 'Лимонный курд', 
-        image: '', 
+        image: 'https://i.ytimg.com/vi/SF6NY9PQd34/sddefault.jpg?w=80&h=60&fit=crop', 
         description: 'Освежающий лимонный курд с цитрусовым вкусом',
         ingredients: ['лимонный сок', 'цедра лимона', 'яйца', 'сахар', 'сливочное масло'],
         preparationTime: '25 мин',
@@ -839,7 +830,7 @@ const fillings = [
     { 
         id: 'apple-cinnamon', 
         name: 'Яблочно-коричная начинка', 
-        image: '', 
+        image: 'https://img.iamcook.ru/2018/upl/recipes/cat/u-8c8cefb1a26f1081b7f8f182135315fa.jpg?w=80&h=60&fit=crop', 
         description: 'Ароматная начинка с яблоками и корицей',
         ingredients: ['яблоки', 'корица', 'сахар', 'лимонный сок', 'мука'],
         preparationTime: '30 мин',

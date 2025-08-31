@@ -390,7 +390,7 @@ body {
     width: 140px;
     height: 45px;
     border-radius: 70px 70px 25px 25px;
-    margin-top: 10px;
+    margin-top: 5px;
     margin-left: 10px; /* Центрируем относительно третьего слоя (160px - 140px = 20px, делим на 2 = 10px) */
     box-shadow: 
         0 8px 32px rgba(255, 105, 180, 0.3),
@@ -423,7 +423,7 @@ body {
     width: 160px;
     height: 50px;
     border-radius: 80px 80px 30px 30px;
-    margin-top: 10px;
+    margin-top: 5px;
     margin-left: 0; /* Третий слой остается по центру как базовый */
     box-shadow: 
         0 8px 32px rgba(255, 105, 180, 0.3),
@@ -588,6 +588,45 @@ body {
 .popular-cakes {
     padding: 5rem 2rem;
     background: var(--white);
+}
+
+/* Секция с призывом к действию для конструктора */
+.constructor-cta {
+    text-align: center;
+    margin-top: 4rem;
+    padding: 3rem 2rem;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(255, 105, 180, 0.1);
+}
+
+.constructor-cta h3 {
+    font-size: 2rem;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.constructor-cta p {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-large {
+    padding: 1.2rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    box-shadow: 0 8px 25px rgba(255, 105, 180, 0.3);
+    transition: all 0.3s ease;
+}
+
+.btn-large:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(255, 105, 180, 0.4);
 }
 
 .container {
@@ -1609,7 +1648,37 @@ body {
         min-width: 90px;
     }
     
-
+    /* Опускаем свечку и анимацию тортика на мобильных устройствах */
+    .floating-cake {
+        transform: translateY(30px);
+    }
+    
+    .cake-candle {
+        top: -15px;
+    }
+    
+    .cake-flame {
+        top: -25px;
+    }
+    
+    /* Адаптация секции конструктора для планшетов */
+    .constructor-cta {
+        margin-top: 3rem;
+        padding: 2rem 1.5rem;
+    }
+    
+    .constructor-cta h3 {
+        font-size: 1.75rem;
+    }
+    
+    .constructor-cta p {
+        font-size: 1rem;
+    }
+    
+    .btn-large {
+        padding: 1rem 2rem;
+        font-size: 1rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1700,5 +1769,37 @@ body {
      
      .recipe-btn i {
          font-size: 1rem;
+     }
+     
+     /* Дополнительно опускаем анимацию тортика на очень маленьких экранах */
+     .floating-cake {
+         transform: translateY(50px);
+     }
+     
+     .cake-candle {
+         top: -10px;
+     }
+     
+     .cake-flame {
+         top: -20px;
+     }
+     
+     /* Адаптация секции конструктора для очень маленьких экранов */
+     .constructor-cta {
+         margin-top: 2rem;
+         padding: 1.5rem 1rem;
+     }
+     
+     .constructor-cta h3 {
+         font-size: 1.5rem;
+     }
+     
+     .constructor-cta p {
+         font-size: 0.9rem;
+     }
+     
+     .btn-large {
+         padding: 0.8rem 1.5rem;
+         font-size: 0.9rem;
      }
  }
